@@ -1,0 +1,283 @@
+@startuml
+package "GPTChat System" {
+
+  [User Management]
+  [Chat Interface]
+  [Group Management]
+  [ChatGPT API]
+  database "Database"
+
+  [User Management] --> [Chat Interface] : Manage Users
+  [User Management] --> [Database] : Store/Retrieve User Info
+
+  [Chat Interface] --> [ChatGPT API] : Get Suggested Responses
+  [Chat Interface] --> [Database] : Fetch/Store Chats
+
+  [Group Management] --> [Chat Interface] : Manage Groups
+  [Group Management] --> [Database] : Store/Retrieve Group Info
+
+  [ChatGPT API] --> [Database] : Fetch Context for Suggestions
+
+}
+
+@enduml
+
+
+@startuml
+package "Tech Stack" {
+
+  component "[ Frontend ]\nHTML, CSS\nJavaScript\nReact/Vue.js" as FE
+  component "[ Backend ]\nSpring Boot (Java)\nWebSocket" as BE
+  component "[ Database ]\nMySQL" as DB
+  component "[ API ]\nChatGPT API" as API
+  component "[ Containerization ]\nDocker" as CONT
+  component "[ Version Control ]\nGit, GitHub" as VC
+  component "[ Cloud Server ]\nAzure/AWS/GCP" as CLOUD
+}
+
+@enduml
+
+
+@startuml
+!theme blueprint
+package "GPTChat System - Clean Architecture" {
+
+  package "Entities" {
+    [User]
+    [ChatMessage]
+    [ChatRoom]
+  }
+
+  package "Use Cases" {
+    [Register User] as registerUser
+    [Authenticate User] as authUser
+    [Send Message] as sendMessage
+    [Fetch Chat History] as fetchChat
+    [Get Suggested Response] as getSuggestion
+  }
+
+  package "Interface Adapters" {
+    [User Controller] as userController
+    [Chat Controller] as chatController
+    [User DTO] as userDTO
+    [Message DTO] as messageDTO
+  }
+
+  package "Frameworks and Drivers" {
+    database "Database"
+    [ChatGPT API] as api
+    [Web UI] as webUI
+    [Swing GUI] as GUI
+  }
+
+  User --> registerUser
+  User --> authUser
+  ChatMessage --> sendMessage
+  ChatRoom --> fetchChat
+
+  registerUser --> userController
+  authUser --> userController
+  sendMessage --> chatController
+  fetchChat --> chatController
+  getSuggestion --> chatController
+
+  userController --> userDTO
+  chatController --> messageDTO
+
+  userDTO --> Database
+  messageDTO --> Database
+
+  chatController --> api
+  GUI --> chatController
+
+}
+
+@enduml
+
+
+Class UML:
+@startuml
+package "Entities" {
+class User {
+    - username: String
+    - password: String
+    + getUsername(): String
+    + setUsername(username: String)
+    + getPassword(): String
+    + setPassword(password: String)
+}
+
+class ChatMessage {
+    - content: String
+    - sender: String
+    - timestamp: Date
+    - type: MessageType
+    --
+    + getContent(): String
+    + setContent(content: String)
+    + getSender(): String
+    + setSender(sender: String)
+    + getTimestamp(): Date
+    + setTimestamp(timestamp: Date)
+    + getType(): MessageType
+    + setType(type: MessageType)
+}
+
+enum MessageType {
+    CHAT
+    LEAVE
+    JOIN
+}
+
+class ChatRoom {
+    - members: List<User>
+    - messages: List<ChatMessage>
+    + getMembers(): List<User>
+    + setMembers(members: List<User>)
+    + getMessages(): List<ChatMessage>
+    + setMessages(messages: List<ChatMessage>)
+}
+}
+User  -->  ChatMessage
+ChatRoom  -->  User
+ChatRoom  -->  ChatMessage
+ChatMessage --> MessageType
+
+@enduml
+
+UseCasesUML:
+@startuml
+
+package "Use Cases" {
+
+  class "RegisterUser" {
+    - username: String
+    - password: String
+    - email: String
+    --
+    + register(): boolean
+    + validateInput(): boolean
+  }
+
+  class "AuthenticateUser" {
+    - username: String
+    - password: String
+    --
+    + authenticate(): boolean
+    + validateCredentials(): boolean
+  }
+
+  class "SendMessage" {
+    - content: String
+    - chatRoomID: String
+    --
+    + send(): boolean
+  }
+
+  class "JoinChatRoom" {
+    - chatRoomID: String
+    --
+    + join(): boolean
+  }
+
+  class "LeaveChatRoom" {
+    - chatRoomID: String
+    --
+    + leave(): boolean
+  }
+
+  class "FetchChatHistory" {
+    - chatRoomID: String
+    - dateRange: DateRange
+    --
+    + fetchHistory(): List<ChatMessage>
+  }
+
+  class "GetSuggestedResponse" {
+    - currentMessageContent: String
+    --
+    + getSuggestion(): String
+  }
+}
+
+@enduml
+
+AdaptersClassUML:
+
+@startuml
+
+package "Adapters" {
+
+  class "UserController" {
+    + register(): Response
+    + authenticate(): Response
+  }
+
+  class "ChatController" {
+    + send(): Response
+    + join(): Response
+    + leave(): Response
+    + fetchHistory(): Response
+    + getSuggestion(): Response
+  }
+
+  class "UserDAO" {
+    - username: String
+    - password: String
+    - email: String
+    --
+    + toEntity(): User
+    + fromEntity(user: User): UserDAO
+  }
+
+  class "MessageDAO" {
+    - content: String
+    - sender: String
+    - timestamp: Date
+    - type: MessageType
+    --
+    + toEntity(): ChatMessage
+    + fromEntity(message: ChatMessage): MessageDAO
+  }
+
+  interface "UserRepository" {
+    + save(user: User): User
+    + findByUsername(username: String): User
+  }
+
+  interface "ChatMessageRepository" {
+    + save(message: ChatMessage): ChatMessage
+    + findByChatRoomID(chatRoomID: String): List<ChatMessage>
+  }
+
+  class "ChatGPTApiClient" {
+    + fetchRecommendation(content: String): String
+  }
+}
+
+@enduml
+
+FrameworkClassUML
+@startuml
+
+package "Framework" {
+
+  class "WebSocketConfig" {
+    + configureWebSocket(): void
+  }
+
+  class "DatabaseConfig" {
+    + configureDatabaseConnection(): void
+    + initDatabaseSchema(): void
+  }
+
+  class "ChatGPTAPI" {
+    - endpoint: String
+    --
+    + requestRecommendation(content: String): String
+    + connect(): void
+  }
+
+}
+
+@enduml
