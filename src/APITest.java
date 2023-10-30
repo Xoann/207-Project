@@ -5,12 +5,13 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class APITest {
+public class APIExample {
     private static final String API_TOKEN = System.getenv("OPENAI_API_KEY");
     public static void callAPI(String[] conversation) throws JSONException {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
+
         JSONObject requestBody = new JSONObject();
         JSONArray messagesArray = new JSONArray();
         JSONObject message;
@@ -41,7 +42,10 @@ public class APITest {
                 System.out.println("Success!");
             }
 
-            JSONObject responseBody = new JSONObject(response.body().string());
+            JSONObject responseBody = null;
+            if (response.body() != null) {
+                responseBody = new JSONObject(response.body().string());
+            }
             System.out.println(responseBody);
         }
         catch (JSONException | IOException e) {
