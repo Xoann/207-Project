@@ -3,13 +3,17 @@ package entity;
 import java.util.ArrayList;
 
 public class Conversation {
-    ArrayList<Message> messages;
+    private final ArrayList<Message> messages;
 
-    ArrayList<Message> getMessages() {
+    Conversation() {
+        messages = new ArrayList<>();
+    }
+
+     public ArrayList<Message> getMessages() {
         return messages;
     }
 
-    void sendMessage(Message message) {
+    public void sendMessage(Message message) {
         messages.add(message);
     }
 }
