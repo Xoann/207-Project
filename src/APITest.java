@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class APIExample {
+public class APITest {
     private static final String API_TOKEN = System.getenv("OPENAI_API_KEY");
     public static void callAPI(String[] conversation) throws JSONException {
         OkHttpClient client = new OkHttpClient();

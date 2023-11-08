@@ -1,4 +1,4 @@
-package main.entity;
+package entity;
 
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +39,7 @@ class CommonUserTest {
     void setPassword() {
         User user = new CommonUser("name", "password");
         assert user.getPassword().equals("password");
-        user.setUsername("new");
+        user.setPassword("new");
         assert user.getPassword().equals("new");
     }
 
