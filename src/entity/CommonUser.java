@@ -10,9 +10,12 @@ public class CommonUser implements User {
 
     private final ArrayList<User> friends = new ArrayList<>();
 
-    CommonUser(String name, String password) {
+    private String apiKey;
+
+    CommonUser(String name, String password, String apiKey) {
         this.name = name;
         this.password = password;
+        this.apiKey = apiKey;
     }
 
     @Override
@@ -29,6 +32,9 @@ public class CommonUser implements User {
     public ArrayList<User> getFriends() {
         return this.friends;
     }
+
+    @Override
+    public String getApiKey() { return this.apiKey; }
 
     @Override
     public void setUsername(String name) {
@@ -50,5 +56,8 @@ public class CommonUser implements User {
     public void removeFriend(User ex_friend){
         this.friends.remove(ex_friend);
     }
+
+    @Override
+    public void setApiKey(String apiKey) { this.apiKey = apiKey; }
 
 }
