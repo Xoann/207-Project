@@ -32,13 +32,15 @@ public class RecommendationInteractor implements RecommendationInputBoundary{
 
     /**
      * Calls the OpenAI API to generate a recommendation for a reply to a conversation
-     * @param recommendationInputData the current conversation's ID, current user's username, and the instruction for generating a recommendation
+     * @param recommendationInputData the current conversation's ID, current user's username, and the instruction for
+     *                                what type of recommendation to generate
      */
     @Override
     public void execute(RecommendationInputData recommendationInputData) {
-        Long conversationId = recommendationInputData.getConversationId();
+        long conversationId = recommendationInputData.getConversationId();
         String recommendationInstructions = recommendationInputData.getRecommendationInstructions();
         String username = recommendationInputData.getUsername();
+        String systemInstructions = "Given a conversation, generate a " + recommendationInstructions + "response.";
         String apiKey;
         String conversation;
 
@@ -63,7 +65,7 @@ public class RecommendationInteractor implements RecommendationInputBoundary{
 
         JSONObject instructions = new JSONObject();
         instructions.put("role", "system");
-        instructions.put("content", recommendationInstructions);
+        instructions.put("content", systemInstructions);
         messagesArray.put(instructions);
 
         JSONObject convo = new JSONObject();
