@@ -7,7 +7,8 @@ public class Conversation {
 
     private final long id;
 
-    Conversation(long id) {
+    // TODO can remove public later on. This was added to add dummy data in the DAOs
+    public Conversation(long id) {
         messages = new ArrayList<>();
         this.id = id;
     }

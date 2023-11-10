@@ -12,7 +12,8 @@ public class CommonUser implements User {
 
     private String apiKey;
 
-    CommonUser(String name, String password, String apiKey) {
+    // TODO can remove public later on. This was added to add dummy data in the DAOs
+    public CommonUser(String name, String password, String apiKey) {
         this.name = name;
         this.password = password;
         this.apiKey = apiKey;

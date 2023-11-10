@@ -4,6 +4,7 @@ import data_access.InMemoryConversationDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.recommendation.RecommendationControllerBuilder;
 import view.LoggedInView;
 import view.ViewManager;
 
@@ -30,11 +31,12 @@ public class Main {
 
         LoggedInView loggedInView = new LoggedInView(
                 loggedInViewModel,
-                RecommendationUseCaseFactory.createRecommendationUseCase(loggedInViewModel, userDataAccessObject, conversationDataAccessObject)
+                RecommendationControllerBuilder.createRecommendationController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject)
         );
 
         views.add(loggedInView, loggedInView.viewName);
 
+        // TODO change this to sign up or sign in view later. This is just to skip the sign in step of the app.
         viewManagerModel.setActiveView(loggedInView.viewName);
         viewManagerModel.firePropertyChanged();
 

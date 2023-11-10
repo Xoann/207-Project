@@ -1,10 +1,10 @@
 package interface_adapter.logged_in;
 
 public class LoggedInState {
-    private String username = "";
+    private String username = "test";
     private long conversationId = 0L;
     private String message = "";
-    private String recommendationError = "";
+    private String recommendationError = null;
 
     public LoggedInState(LoggedInState copy) {
         this.username = copy.username;

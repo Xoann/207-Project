@@ -15,7 +15,7 @@ import java.beans.PropertyChangeListener;
 public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
-    final JTextField messageField = new JTextField(15);
+    final JTextField messageField = new JTextField(100);
     final JButton recommendation;
     private final RecommendationController recommendationController;
 
@@ -32,8 +32,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         recommendation.addActionListener(
                 new ActionListener() {
                     @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(recommendation)) {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(recommendation)) {
                             LoggedInState currState = loggedInViewModel.getState();
 
                             recommendationController.execute(
@@ -48,17 +48,17 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         messageField.addKeyListener(
                 new KeyListener() {
                     @Override
-                    public void keyTyped(KeyEvent e) {
+                    public void keyTyped(KeyEvent evt) {
                         LoggedInState currState = loggedInViewModel.getState();
-                        currState.setMessage(messageField.getText() + e.getKeyChar());
+                        currState.setMessage(messageField.getText() + evt.getKeyChar());
                         loggedInViewModel.setState(currState);
                     }
 
                     @Override
-                    public void keyPressed(KeyEvent e) {}
+                    public void keyPressed(KeyEvent evt) {}
 
                     @Override
-                    public void keyReleased(KeyEvent e) {}
+                    public void keyReleased(KeyEvent evt) {}
                 }
         );
 
@@ -68,7 +68,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.add(buttons);
     }
     @Override
-    public void actionPerformed(ActionEvent e) {}
+    public void actionPerformed(ActionEvent evt) {}
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -77,5 +77,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         if (loggedInState.getRecommendationError() != null) {
             JOptionPane.showMessageDialog(this, loggedInState.getRecommendationError());
         }
+
+        messageField.setText(loggedInState.getMessage());
     }
 }
