@@ -1,15 +1,24 @@
 package use_case.send_message;
 
-import entity.Message;
+import entity.User;
 
 public class SendMessageInputData {
 
-    final private Message message;
+    final private String message;
 
-    public SendMessageInputData(Message message) {
+    final private User sender;
+
+    final private long id;
+
+    public SendMessageInputData(String message, User sender, long id) {
         this.message = message;
+        this.sender = sender;
+        this.id = id;
     }
 
-    Message getMessage() { return message; }
+    String getMessage() { return message; }
 
+    User getSender() { return sender; }
+
+    public long getId() { return id; }
 }
