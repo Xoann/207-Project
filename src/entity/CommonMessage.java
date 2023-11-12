@@ -7,7 +7,7 @@ public class CommonMessage implements Message{
     private final User sender;
     private final LocalDateTime timeSent;
 
-    CommonMessage(String message, User sender){
+    public CommonMessage(String message, User sender){
         this.message = message;
         this.sender = sender;
         this.timeSent = LocalDateTime.now();

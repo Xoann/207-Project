@@ -8,11 +8,14 @@ public class CommonUser implements User {
 
     private String password;
 
+    private String apiKey;
+
     private final ArrayList<User> friends = new ArrayList<>();
 
-    CommonUser(String name, String password) {
+    public CommonUser(String name, String password, String apiKey) {
         this.name = name;
         this.password = password;
+        this.apiKey = apiKey;
     }
 
     @Override
