@@ -1,3 +1,7 @@
+.idea/*
+207-project.iml
+target/*
+=======
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
