@@ -5,6 +5,7 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.recommendation.RecommendationController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -17,6 +18,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final LoggedInViewModel loggedInViewModel;
     final JTextField messageField = new JTextField(100);
     final JButton recommendation;
+    final JButton send;
     private final RecommendationController recommendationController;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel, RecommendationController recommendController) {
@@ -27,7 +29,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         JLabel title = new JLabel("conversation");
         JPanel buttons = new JPanel();
         recommendation = new JButton(loggedInViewModel.RECOMMENDATION_BUTTON_LABEL);
+        send = new JButton("Send");
         buttons.add(recommendation);
+        buttons.add(send);
 
         recommendation.addActionListener(
                 new ActionListener() {
@@ -62,10 +66,17 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                 }
         );
 
+        JPanel messagePanel = new JPanel();
+        messagePanel.setLayout(new FlowLayout());
+        messagePanel.setPreferredSize(new Dimension(1200, 50));
+        messageField.setPreferredSize(new Dimension(150,20));
+
+        messagePanel.add(messageField);
+        messagePanel.add(buttons);
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(messageField);
-        this.add(buttons);
+        this.add(messagePanel);
     }
     @Override
     public void actionPerformed(ActionEvent evt) {}
