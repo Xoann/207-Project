@@ -2,7 +2,6 @@ package use_case.signup;
 
 import entity.User;
 import entity.UserFactory;
-import java.time.LocalDateTime;
 
 public class SignupInteractor implements SignupInputBoundary {
     final SignupUserDataAccessInterface userDataAccessObject;
@@ -22,7 +21,6 @@ public class SignupInteractor implements SignupInputBoundary {
         if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
             userPresenter.prepareFailView("Username already taken.");
         } else {
-            LocalDateTime now = LocalDateTime.now();
             User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword());
             userDataAccessObject.save(user);
 
