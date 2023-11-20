@@ -13,6 +13,8 @@ public interface User {
 
     List<User> getFriends();
 
+    String getApiKey();
+
     void setUsername(String username);
 
     void setPassword(String password);
@@ -20,4 +22,6 @@ public interface User {
     void addFriend(User user);
 
     void removeFriend(User user);
+
+    void setApiKey(String apiKey);
 }
