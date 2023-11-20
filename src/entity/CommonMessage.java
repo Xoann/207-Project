@@ -7,7 +7,8 @@ public class CommonMessage implements Message{
     private final User sender;
     private final LocalDateTime timeSent;
 
-    CommonMessage(String message, User sender){
+    // TODO can remove public later on. This was added to add dummy data in the DAOs
+    public CommonMessage(String message, User sender){
         this.message = message;
         this.sender = sender;
         this.timeSent = LocalDateTime.now();
