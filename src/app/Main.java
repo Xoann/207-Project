@@ -7,6 +7,7 @@ import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.send_message.SendMessageControllerBuilder;
+import interface_adapter.recommendation.RecommendationControllerBuilder;
 import view.LoggedInView;
 import view.ViewManager;
 
@@ -14,7 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Main {
-
     public static void main(String[] args) {
         JFrame application = new JFrame("AI Chat App");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -34,7 +34,8 @@ public class Main {
 
         LoggedInView loggedInView = new LoggedInView(
                 loggedInViewModel,
-                SendMessageControllerBuilder.createSendMessageController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject)
+                SendMessageControllerBuilder.createSendMessageController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject),
+                RecommendationControllerBuilder.createRecommendationController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject)
         );
 
         views.add(loggedInView, loggedInView.viewName);

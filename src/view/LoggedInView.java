@@ -3,6 +3,7 @@ package view;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.send_message.SendMessageController;
+import interface_adapter.recommendation.RecommendationController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,21 +21,26 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     final JTextArea conversationArea = new JTextArea ("Conversation");
 
     final JButton send;
+    final JButton recommendation;
 
     final SendMessageController sendMessageController;
+    final RecommendationController recommendationController;
 
 
     public LoggedInView(LoggedInViewModel loggedInViewModel,
-                        SendMessageController sendMessageController) {
+                        SendMessageController sendMessageController,
+                        RecommendationController recommendController) {
 
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
         this.sendMessageController = sendMessageController;
+        this.recommendationController = recommendController;
 
         JLabel title = new JLabel("conversation");
         JPanel buttons = new JPanel();
         send = new JButton("Send");
-
+        recommendation = new JButton(loggedInViewModel.RECOMMENDATION_BUTTON_LABEL);
+        buttons.add(recommendation);
         buttons.add(send);
 
         send.addActionListener(
@@ -48,6 +54,23 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                                     currState.getMessage(),
                                     currState.getUsername(),
                                     currState.getConversationId()
+                            );
+                        }
+                    }
+                }
+        );
+        
+        recommendation.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(recommendation)) {
+                            LoggedInState currState = loggedInViewModel.getState();
+
+                            recommendationController.execute(
+                                    currState.getConversationId(),
+                                    currState.getMessage(),
+                                    currState.getUsername()
                             );
                         }
                     }

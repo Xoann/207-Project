@@ -1,26 +1,29 @@
 package entity;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CommonUserTest {
+    User user;
+    @BeforeEach
+    void setup() {
+        user = new CommonUser("name", "password", "apiKey");
+    }
 
     @Test
     void getUsername() {
-        User user = new CommonUser("name", "password");
         assert user.getUsername().equals("name");
     }
 
     @Test
     void getPassword() {
-        User user = new CommonUser("name", "password");
         assert user.getPassword().equals("password");
     }
 
     @Test
     void getFriends() {
-        User user = new CommonUser("name", "password");
-        User friend1 = new CommonUser("bob", "password");
-        User friend2 = new CommonUser("bobby", "password");
+        User friend1 = new CommonUser("bob", "passwordBob", "apiKeyBob");
+        User friend2 = new CommonUser("bobby", "passwordBobby", "apiKeyBobby");
         user.addFriend(friend1);
         user.addFriend(friend2);
         assert user.getFriends().get(0).getUsername().equals("bob");
@@ -28,8 +31,12 @@ class CommonUserTest {
     }
 
     @Test
+    void getApiKey() {
+        assert user.getApiKey().equals("apiKey");
+    }
+
+    @Test
     void setUsername() {
-        User user = new CommonUser("name", "password");
         assert user.getUsername().equals("name");
         user.setUsername("new");
         assert user.getUsername().equals("new");
@@ -37,7 +44,6 @@ class CommonUserTest {
 
     @Test
     void setPassword() {
-        User user = new CommonUser("name", "password");
         assert user.getPassword().equals("password");
         user.setPassword("new");
         assert user.getPassword().equals("new");
@@ -45,18 +51,23 @@ class CommonUserTest {
 
     @Test
     void addFriend() {
-        User user = new CommonUser("name", "password");
-        User friend = new CommonUser("bob", "password");
+        User friend = new CommonUser("bob", "passwordBob", "apiKeyBob");
         user.addFriend(friend);
         assert user.getFriends().get(0).getUsername().equals("bob");
     }
 
     @Test
     void removeFriend() {
-        User user = new CommonUser("name", "password");
-        User friend = new CommonUser("bob", "password");
+        User friend = new CommonUser("bob", "passwordBob", "apiKeyBob");
         user.addFriend(friend);
         user.removeFriend(friend);
         assert user.getFriends().isEmpty();
+    }
+
+    @Test
+    void setApiKey() {
+        assert user.getApiKey().equals("apiKey");
+        user.setApiKey("newApiKey");
+        assert user.getApiKey().equals("newApiKey");
     }
 }

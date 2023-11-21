@@ -1,7 +1,6 @@
 package interface_adapter.logged_in;
 
 import entity.Conversation;
-
 import java.util.ArrayList;
 
 public class LoggedInState {

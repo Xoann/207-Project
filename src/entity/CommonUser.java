@@ -5,13 +5,11 @@ import java.util.ArrayList;
 public class CommonUser implements User {
 
     private String name;
-
     private String password;
-
     private String apiKey;
-
     private final ArrayList<User> friends = new ArrayList<>();
 
+    // TODO can remove public later on. This was added to add dummy data in the DAOs
     public CommonUser(String name, String password, String apiKey) {
         this.name = name;
         this.password = password;
@@ -34,6 +32,9 @@ public class CommonUser implements User {
     }
 
     @Override
+    public String getApiKey() { return this.apiKey; }
+
+    @Override
     public void setUsername(String name) {
         this.name=name;
     }
@@ -53,5 +54,8 @@ public class CommonUser implements User {
     public void removeFriend(User ex_friend){
         this.friends.remove(ex_friend);
     }
+
+    @Override
+    public void setApiKey(String apiKey) { this.apiKey = apiKey; }
 
 }
