@@ -2,11 +2,8 @@ package app;
 
 import data_access.InMemoryConversationDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
-import entity.CommonUserFactory;
-import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.send_message.SendMessageControllerBuilder;
 import interface_adapter.recommendation.RecommendationControllerBuilder;
 import view.LoggedInView;
 import view.ViewManager;
@@ -34,7 +31,6 @@ public class Main {
 
         LoggedInView loggedInView = new LoggedInView(
                 loggedInViewModel,
-                SendMessageControllerBuilder.createSendMessageController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject),
                 RecommendationControllerBuilder.createRecommendationController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject)
         );
 

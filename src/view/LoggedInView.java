@@ -2,7 +2,6 @@ package view;
 
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.send_message.SendMessageController;
 import interface_adapter.recommendation.RecommendationController;
 
 import javax.swing.*;
@@ -18,48 +17,22 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     public final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
     final JTextField messageField = new JTextField(100);
-    final JTextArea conversationArea = new JTextArea ("Conversation");
-
-    final JButton send;
     final JButton recommendation;
+    final JButton send;
+    private final RecommendationController recommendationController;
 
-    final SendMessageController sendMessageController;
-    final RecommendationController recommendationController;
-
-
-    public LoggedInView(LoggedInViewModel loggedInViewModel,
-                        SendMessageController sendMessageController,
-                        RecommendationController recommendController) {
-
+    public LoggedInView(LoggedInViewModel loggedInViewModel, RecommendationController recommendController) {
+        this.recommendationController = recommendController;
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
-        this.sendMessageController = sendMessageController;
-        this.recommendationController = recommendController;
 
         JLabel title = new JLabel("conversation");
         JPanel buttons = new JPanel();
-        send = new JButton("Send");
         recommendation = new JButton(loggedInViewModel.RECOMMENDATION_BUTTON_LABEL);
+        send = new JButton("Send");
         buttons.add(recommendation);
         buttons.add(send);
 
-        send.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(send)) {
-                            LoggedInState currState = loggedInViewModel.getState();
-
-                            sendMessageController.execute(
-                                    currState.getMessage(),
-                                    currState.getUsername(),
-                                    currState.getConversationId()
-                            );
-                        }
-                    }
-                }
-        );
-        
         recommendation.addActionListener(
                 new ActionListener() {
                     @Override
@@ -70,8 +43,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                             recommendationController.execute(
                                     currState.getConversationId(),
                                     currState.getMessage(),
-                                    currState.getUsername()
-                            );
+                                    currState.getUsername());
                         }
                     }
                 }
@@ -102,19 +74,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         messagePanel.add(messageField);
         messagePanel.add(buttons);
 
-        conversationArea.setEditable(false);
-        conversationArea.setLineWrap(true);
-        conversationArea.setPreferredSize(new Dimension(800, 400));
-
-
-        JScrollPane conversation = new JScrollPane (conversationArea,
-                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        conversation.setPreferredSize(new Dimension(200, 100));
-
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(conversation);
         this.add(messagePanel);
     }
     @Override
@@ -129,6 +90,5 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         }
 
         messageField.setText(loggedInState.getMessage());
-        conversationArea.setText(loggedInState.getConversation());
     }
 }
