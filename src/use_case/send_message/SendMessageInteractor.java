@@ -3,17 +3,17 @@ package use_case.send_message;
 import entity.Message;
 import entity.MessageFactory;
 
-import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class SendMessageInteractor implements SendMessageInputBoundary {
 
-    final SendMessageDataAccessInterface conversationDataAccessObject;
+    final SendMessageConversationDataAccessInterface conversationDataAccessObject;
 
     final SendMessageOutputBoundary sendMessagePresenter;
 
     final MessageFactory messageFactory;
 
-    public SendMessageInteractor(SendMessageDataAccessInterface conversationDataAccessObject,
+    public SendMessageInteractor(SendMessageConversationDataAccessInterface conversationDataAccessObject,
                                  SendMessageOutputBoundary sendMessagePresenter,
                                  MessageFactory messageFactory) {
         this.conversationDataAccessObject = conversationDataAccessObject;
@@ -22,10 +22,16 @@ public class SendMessageInteractor implements SendMessageInputBoundary {
     }
     @Override
     public void execute(SendMessageInputData sendMessageInputData) {
-        Message message = messageFactory.create(sendMessageInputData.getMessage(), sendMessageInputData.getSender());
-        conversationDataAccessObject.save(sendMessageInputData.getId(), message);
+        String messageText = sendMessageInputData.getMessage();
+        if (Objects.equals(messageText, "")) {
+            sendMessagePresenter.prepareFailView("Empty message");
+        } else {
+            Message message = messageFactory.create(messageText, sendMessageInputData.getSender());
+            conversationDataAccessObject.save(sendMessageInputData.getId(), message);
 
-        SendMessageOutputData sendMessageOutputData = new SendMessageOutputData(message, false);
-        sendMessagePresenter.prepareSuccessView(sendMessageOutputData);
+            SendMessageOutputData sendMessageOutputData = new SendMessageOutputData(message, false);
+            sendMessagePresenter.prepareSuccessView(sendMessageOutputData);
+        }
+
     }
 }

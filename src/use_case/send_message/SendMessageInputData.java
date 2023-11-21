@@ -8,17 +8,17 @@ public class SendMessageInputData {
 
     final private User sender;
 
-    final private long id;
+    final private long conversationId;
 
-    public SendMessageInputData(String message, User sender, long id) {
+    public SendMessageInputData(String message, User sender, long conversationId) {
         this.message = message;
         this.sender = sender;
-        this.id = id;
+        this.conversationId = conversationId;
     }
 
     String getMessage() { return message; }
 
     User getSender() { return sender; }
 
-    public long getId() { return id; }
+    public long getId() { return conversationId; }
 }

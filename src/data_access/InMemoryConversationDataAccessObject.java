@@ -1,12 +1,12 @@
 package data_access;
 
 import entity.*;
-import use_case.send_message.SendMessageDataAccessInterface;
+import use_case.send_message.SendMessageConversationDataAccessInterface;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryConversationDataAccessObject implements SendMessageDataAccessInterface {
+public class InMemoryConversationDataAccessObject implements SendMessageConversationDataAccessInterface {
 
     private final Map<Long, Conversation> conversations = new HashMap<>();
 
