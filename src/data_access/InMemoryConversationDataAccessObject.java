@@ -31,6 +31,7 @@ public class InMemoryConversationDataAccessObject implements SendMessageConversa
     @Override
     public void save(long id, Message message) {
         conversations.get(id).sendMessage(message);
+    }
 
     /**
      * @param id the conversation's id
