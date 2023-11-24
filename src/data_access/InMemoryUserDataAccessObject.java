@@ -32,6 +32,9 @@ public class InMemoryUserDataAccessObject implements RecommendationUserDataAcces
         return users.get(username);
     }
 
+    @Override
+    public void save(User user) {}
+
     /**
      * @param username the user's username
      * @return if the user exists
