@@ -3,19 +3,19 @@ package use_case.reset_password;
 import entity.User;
 
 public class ResetPasswordInputData {
-    // Look into using username instead of user since they'll be logged out
-    final private User user;
+
+    final private String username;
     final private String newPassword;
     final private String repeatNewPassword;
 
-    public ResetPasswordInputData(User user, String newPassword, String repeatNewPassword){
-        this.user = user;
+    public ResetPasswordInputData(String username, String newPassword, String repeatNewPassword){
+        this.username = username;
         this.newPassword = newPassword;
         this.repeatNewPassword = repeatNewPassword;
     }
 
-    public User getUser(){
-        return this.user;
+    public String getUsername(){
+        return this.username;
     }
     public String getNewPassword() {
         return newPassword;

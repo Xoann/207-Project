@@ -9,4 +9,5 @@ public class ResetPasswordOutputData {
         this.user = user;
         this.useCaseFailed = useCaseFailed;
     }
+    public User getUser(){return this.user;}
 }
