@@ -1,5 +1,6 @@
 package app;
 
+import data_access.FileConversationDataAccessObject;
 import data_access.InMemoryConversationDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
@@ -13,6 +14,7 @@ import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,7 +31,9 @@ public class Main {
 
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
 
-        InMemoryConversationDataAccessObject conversationDataAccessObject = new InMemoryConversationDataAccessObject();
+//        InMemoryConversationDataAccessObject conversationDataAccessObject = new InMemoryConversationDataAccessObject();
+        FileConversationDataAccessObject conversationDataAccessObject = new FileConversationDataAccessObject(0);
+
         InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
 
         LoggedInView loggedInView = new LoggedInView(

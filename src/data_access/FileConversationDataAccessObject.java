@@ -21,7 +21,7 @@ public class FileConversationDataAccessObject implements SendMessageConversation
 
     @Override
     public Conversation get(long id) {
-        String conversationPath = "/conversations/" + id + ".txt";
+        String conversationPath = "conversations/" + id + ".txt";
         Conversation conversation = new Conversation(id);
         try {
             FileReader fileReader = new FileReader(conversationPath);
@@ -44,13 +44,13 @@ public class FileConversationDataAccessObject implements SendMessageConversation
 
     @Override
     public boolean existsById(long id) {
-        Path conversationFilePath = Paths.get("/conversations/", id + ".txt");
+        Path conversationFilePath = Paths.get("conversations/", id + ".txt");
         return Files.exists(conversationFilePath);
     }
 
     @Override
     public void save(long id, Message message) {
-        String conversationPath = "/conversations/" + id + ".txt";
+        String conversationPath = "conversations/" + id + ".txt";
         if (this.existsById(id)) {
             try {
                 writeMessage(message, conversationPath);
@@ -62,19 +62,21 @@ public class FileConversationDataAccessObject implements SendMessageConversation
             try {
                 Files.createFile(path);
                 writeMessage(message, conversationPath);
-
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("Error creating the file: " + e.getMessage());
             }
         }
     }
 
     private void writeMessage(Message message, String conversationPath) throws IOException {
-        FileWriter fileWriter = new FileWriter(conversationPath, true);
-        BufferedWriter writer = new BufferedWriter(fileWriter);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        String formattedDateTime = message.getTimeSent().format(formatter);
-        String logContent = formattedDateTime + "," + message.getSender().getUsername() + "," + message.getMessage();
-        writer.write(logContent);
+        try (FileWriter fileWriter = new FileWriter(conversationPath, true);
+             BufferedWriter writer = new BufferedWriter(fileWriter)) {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String formattedDateTime = message.getTimeSent().format(formatter);
+            String logContent = formattedDateTime + "," + message.getSender().getUsername() + "," + message.getMessage();
+
+            writer.write(logContent);
+        }
     }
 }
