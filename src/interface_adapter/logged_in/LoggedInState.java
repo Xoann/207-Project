@@ -1,8 +1,12 @@
 package interface_adapter.logged_in;
 
+import entity.Conversation;
+import java.util.ArrayList;
+
 public class LoggedInState {
     private String username = "test";
     private long conversationId = 0L;
+    private String conversation = "";
     private String message = "";
     private String recommendationError = null;
 
@@ -23,6 +27,8 @@ public class LoggedInState {
 
     public String getRecommendationError() { return recommendationError; }
 
+    public String getConversation() { return conversation; }
+
     public void setUsername(String username) { this.username = username; }
 
     public void setConversationId(long conversationId) { this.conversationId = conversationId; }
@@ -30,4 +36,6 @@ public class LoggedInState {
     public void setMessage(String message) { this.message = message; }
 
     public void setRecommendationError(String recommendationError) { this.recommendationError = recommendationError; }
+
+    public void setConversation(String conversation) { this.conversation = conversation; }
 }
