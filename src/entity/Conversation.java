@@ -17,9 +17,9 @@ public class Conversation {
         return messages;
     }
 
-    public long getId() { return id; }
-
     public void sendMessage(Message message) {
         messages.add(message);
     }
+
+    public long getId() { return id; }
 }
