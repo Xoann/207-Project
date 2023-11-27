@@ -48,6 +48,4 @@ public class InMemoryUserDataAccessObject implements SendMessageUserDataAccessIn
     public void save(User user) {
         users.put(user.getUsername(), user);
     }
-
-
 }
