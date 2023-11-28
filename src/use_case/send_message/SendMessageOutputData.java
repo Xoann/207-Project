@@ -10,4 +10,8 @@ public class SendMessageOutputData {
         this.message = message;
         this.useCaseFailed = useCaseFailed;
     }
+
+    public Message getMessage() {
+        return message;
+    }
 }

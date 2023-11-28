@@ -17,7 +17,7 @@ public class SendMessagePresenter implements SendMessageOutputBoundary {
     @Override
     public void prepareSuccessView(SendMessageOutputData message) {
         LoggedInState loggedInState = loggedInViewModel.getState();
-        String conversation = loggedInState.getConversation() + loggedInState.getUsername() + " : " + loggedInState.getMessage() + "\n";
+        String conversation = loggedInState.getConversation() + loggedInState.getUsername() + " : " + message.getMessage() + "\n";
         loggedInState.setConversation(conversation);
         loggedInViewModel.firePropertyChanged();
 

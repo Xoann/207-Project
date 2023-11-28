@@ -41,4 +41,9 @@ public class InMemoryUserDataAccessObject implements SendMessageUserDataAccessIn
     public boolean existsByUsername(String username) {
         return users.containsKey(username);
     }
+
+
+    public void save(User user) {
+        users.put(user.getUsername(), user);
+    }
 }
