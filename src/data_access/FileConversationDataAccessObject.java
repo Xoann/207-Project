@@ -1,6 +1,7 @@
 package data_access;
 
 import entity.*;
+import use_case.login.LoginConversationDataAccessInterface;
 import use_case.recommendation.RecommendationConversationDataAccessInterface;
 import use_case.send_message.SendMessageConversationDataAccessInterface;
 
@@ -12,7 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
 
-public class FileConversationDataAccessObject implements SendMessageConversationDataAccessInterface, RecommendationConversationDataAccessInterface {
+public class FileConversationDataAccessObject implements SendMessageConversationDataAccessInterface, RecommendationConversationDataAccessInterface, LoginConversationDataAccessInterface {
 
     InMemoryUserDataAccessObject userDataAccessObject;
     public FileConversationDataAccessObject(long id) {
@@ -74,7 +75,7 @@ public class FileConversationDataAccessObject implements SendMessageConversation
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             String formattedDateTime = message.getTimeSent().format(formatter);
-            String logContent = formattedDateTime + "," + message.getSender().getUsername() + "," + message.getMessage();
+            String logContent = formattedDateTime + "," + message.getSender().getUsername() + "," + message.getMessage() + "\n";
 
             writer.write(logContent);
         }
