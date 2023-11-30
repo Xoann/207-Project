@@ -15,9 +15,13 @@ import java.time.format.DateTimeFormatter;
 
 public class FileConversationDataAccessObject implements SendMessageConversationDataAccessInterface, RecommendationConversationDataAccessInterface, LoginConversationDataAccessInterface {
 
-    InMemoryUserDataAccessObject userDataAccessObject;
+    FileUserDataAccessObject userDataAccessObject;
     public FileConversationDataAccessObject(long id) {
-        this.userDataAccessObject = new InMemoryUserDataAccessObject();
+        try {
+            this.userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

@@ -2,13 +2,15 @@ package data_access;
 
 import entity.CommonUser;
 import entity.User;
+import use_case.login.LoginUserDataAccessInterface;
 import use_case.send_message.SendMessageUserDataAccessInterface;
 import use_case.recommendation.RecommendationUserDataAccessInterface;
+import use_case.signup.SignupUserDataAccessInterface;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryUserDataAccessObject implements SendMessageUserDataAccessInterface, RecommendationUserDataAccessInterface {
+public class InMemoryUserDataAccessObject implements SendMessageUserDataAccessInterface, RecommendationUserDataAccessInterface, LoginUserDataAccessInterface, SignupUserDataAccessInterface {
     private final Map<String, User> users = new HashMap<>();
 
     /**
@@ -33,9 +35,6 @@ public class InMemoryUserDataAccessObject implements SendMessageUserDataAccessIn
         return users.get(username);
     }
 
-    @Override
-    public void save(User user) {}
-
     /**
      * @param username the user's username
      * @return if the user exists
@@ -43,5 +42,10 @@ public class InMemoryUserDataAccessObject implements SendMessageUserDataAccessIn
     @Override
     public boolean existsByUsername(String username) {
         return users.containsKey(username);
+    }
+
+    @Override
+    public void save(User user) {
+        users.put(user.getUsername(), user);
     }
 }
