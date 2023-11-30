@@ -22,7 +22,7 @@ public class SignupUseCaseFactory {
     private SignupUseCaseFactory() {}
 
     public static SignupView create(
-            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, RecommendationUserDataAccessInterface userDataAccessObject) {
+            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface userDataAccessObject) {
 
         try {
             SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
@@ -35,7 +35,7 @@ public class SignupUseCaseFactory {
         return null;
     }
 
-    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, RecommendationUserDataAccessInterface userDataAccessObject) throws IOException {
+    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, SignupUserDataAccessInterface userDataAccessObject) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
         SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
