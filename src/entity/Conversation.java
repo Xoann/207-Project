@@ -22,6 +22,4 @@ public class Conversation {
     public void sendMessage(Message message) {
         messages.add(message);
     }
-
-    public long getId() { return id; }
 }
