@@ -1,7 +1,6 @@
 package interface_adapter.switch_to_login;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 import use_case.switch_to_login.SwitchToLoginOutputBoundary;
 
