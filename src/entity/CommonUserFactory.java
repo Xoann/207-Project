@@ -8,5 +8,4 @@ public class CommonUserFactory implements UserFactory {
     public User create(String name, String password, String key) {
         return new CommonUser(name, password, key);
     }
-
 }

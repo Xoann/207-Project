@@ -2,10 +2,18 @@ package app;
 
 import data_access.FileUserDataAccessObject;
 import data_access.InMemoryConversationDataAccessObject;
+
+
+
+import interface_adapter.login.LoginViewModel;
+
+import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
+import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.login.LoginViewModel;
+import interface_adapter.send_message.SendMessageControllerBuilder;
+
 import interface_adapter.recommendation.RecommendationControllerBuilder;
 import interface_adapter.signup.SignupViewModel;
 import view.LoggedInView;
@@ -48,6 +56,7 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         LoggedInView loggedInView = new LoggedInView(
                 loggedInViewModel,
+                SendMessageControllerBuilder.createSendMessageController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject),
                 RecommendationControllerBuilder.createRecommendationController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject)
         );
 

@@ -1,5 +1,7 @@
 package data_access;
 
+import entity.*;
+import use_case.send_message.SendMessageConversationDataAccessInterface;
 import entity.CommonMessage;
 import entity.CommonUser;
 import entity.Conversation;
@@ -9,7 +11,8 @@ import use_case.recommendation.RecommendationConversationDataAccessInterface;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryConversationDataAccessObject implements RecommendationConversationDataAccessInterface {
+public class InMemoryConversationDataAccessObject implements SendMessageConversationDataAccessInterface, RecommendationConversationDataAccessInterface {
+
     private final Map<Long, Conversation> conversations = new HashMap<>();
 
     /**
@@ -23,6 +26,11 @@ public class InMemoryConversationDataAccessObject implements RecommendationConve
         convo.sendMessage(new CommonMessage("Hey guys, how are you doing?", test2));
         convo.sendMessage(new CommonMessage("I'm good!", test3));
         conversations.put(convo.getId(), convo);
+    }
+
+    @Override
+    public void save(long id, Message message) {
+        conversations.get(id).sendMessage(message);
     }
 
     /**
