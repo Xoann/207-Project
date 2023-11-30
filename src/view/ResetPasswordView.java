@@ -3,6 +3,7 @@ package view;
 import interface_adapter.reset_password.ResetPasswordController;
 import interface_adapter.reset_password.ResetPasswordState;
 import interface_adapter.reset_password.ResetPasswordViewModel;
+import interface_adapter.switch_to_login.SwitchToLoginController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +29,7 @@ public class ResetPasswordView extends JPanel implements ActionListener, Propert
     final JButton cancel;
     private final ResetPasswordController resetPasswordController;
 
-    public ResetPasswordView(ResetPasswordViewModel resetPasswordViewModel, ResetPasswordController controller) {
+    public ResetPasswordView(ResetPasswordViewModel resetPasswordViewModel, ResetPasswordController controller, SwitchToLoginController switchToLoginController) {
 
         this.resetPasswordController = controller;
         this.resetPasswordViewModel = resetPasswordViewModel;
@@ -41,6 +42,12 @@ public class ResetPasswordView extends JPanel implements ActionListener, Propert
                 new JLabel("Username"), usernameInputField);
         LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel("Password"), passwordInputField);*/
+        LabelTextPanel usernameInfo = new LabelTextPanel(
+                new JLabel("Username"), usernameInputField);
+        LabelTextPanel passwordInfo = new LabelTextPanel(
+                new JLabel("Password"), passwordInputField);
+        LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
+                new JLabel("Repeat Password"), repeatPasswordInputField);
 
         JPanel buttons = new JPanel();
         resetPassword = new JButton(ResetPasswordViewModel.RESET_PASSWORD_BUTTON_LABEL);
@@ -64,7 +71,17 @@ public class ResetPasswordView extends JPanel implements ActionListener, Propert
                 }
         );
 
-        cancel.addActionListener(this);
+        //TODO: Implement cancel to switch to Login View
+        cancel.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(e.getSource().equals(cancel)) {
+                            switchToLoginController.execute();
+                        }
+                    }
+                }
+        );
 
         usernameInputField.addKeyListener(new KeyListener() {
             @Override
@@ -121,12 +138,10 @@ public class ResetPasswordView extends JPanel implements ActionListener, Propert
                 });
 
         this.add(title);
-        //this.add(usernameInfo);
-        this.add(usernameInputField);
+        this.add(usernameInfo);
         this.add(usernameErrorField);
-        //this.add(passwordInfo);
-        this.add(passwordInputField);
-        this.add(repeatPasswordInputField);
+        this.add(passwordInfo);
+        this.add(repeatPasswordInfo);
         this.add(passwordErrorField);
         this.add(buttons);
     }

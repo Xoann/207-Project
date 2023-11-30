@@ -9,6 +9,7 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.reset_password.ResetPasswordController;
 import interface_adapter.reset_password.ResetPasswordPresenter;
 import interface_adapter.reset_password.ResetPasswordViewModel;
+import interface_adapter.switch_to_login.SwitchToLoginController;
 import use_case.reset_password.ResetPasswordInputBoundary;
 import use_case.reset_password.ResetPasswordInteractor;
 import use_case.reset_password.ResetPasswordOutputBoundary;
@@ -18,10 +19,12 @@ import javax.swing.*;
 import java.io.IOException;
 
 public class ResetPasswordUseCaseFactory {
-    public static ResetPasswordView create(ViewManagerModel viewManagerModel, ResetPasswordViewModel resetPasswordViewModel, LoginViewModel loginViewModel, FileUserDataAccessObject userDataAccessObject) {
+    public static ResetPasswordView create(ViewManagerModel viewManagerModel, ResetPasswordViewModel resetPasswordViewModel,
+                                           LoginViewModel loginViewModel, FileUserDataAccessObject userDataAccessObject,
+                                           SwitchToLoginController switchToLoginController) {
         try {
             ResetPasswordController resetPasswordController = createResetPasswordUseCase(viewManagerModel, resetPasswordViewModel, loginViewModel, userDataAccessObject);
-            return new ResetPasswordView(resetPasswordViewModel, resetPasswordController);
+            return new ResetPasswordView(resetPasswordViewModel, resetPasswordController, switchToLoginController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }

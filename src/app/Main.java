@@ -17,6 +17,7 @@ import interface_adapter.send_message.SendMessageControllerBuilder;
 
 import interface_adapter.recommendation.RecommendationControllerBuilder;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.switch_to_login.SwitchToLoginControllerBuilder;
 import view.*;
 
 import javax.swing.*;
@@ -51,7 +52,9 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        ResetPasswordView resetPasswordView = ResetPasswordUseCaseFactory.create(viewManagerModel, resetPasswordViewModel, loginViewModel, userDataAccessObject);
+        ResetPasswordView resetPasswordView = ResetPasswordUseCaseFactory.create(viewManagerModel, resetPasswordViewModel,
+                loginViewModel, userDataAccessObject,
+                SwitchToLoginControllerBuilder.createSwitchToLoginController(viewManagerModel, loginViewModel));
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         LoggedInView loggedInView = new LoggedInView(

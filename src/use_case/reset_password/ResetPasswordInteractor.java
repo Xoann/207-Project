@@ -18,7 +18,6 @@ public class ResetPasswordInteractor implements ResetPasswordInputBoundary{
         String username = resetPasswordInputData.getUsername();
         if(!this.userDataAccessObject.existsByUsername(username)) {
             userPresenter.prepareFailView("username doesn't match");
-            return;
         }
         else if (!Objects.equals(resetPasswordInputData.getNewPassword(), resetPasswordInputData.getRepeatNewPassword())) {
             userPresenter.prepareFailView("Passwords don't match");
