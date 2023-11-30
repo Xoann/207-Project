@@ -2,12 +2,13 @@ package data_access;
 
 import entity.CommonUser;
 import entity.User;
+import use_case.send_message.SendMessageUserDataAccessInterface;
 import use_case.recommendation.RecommendationUserDataAccessInterface;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryUserDataAccessObject implements RecommendationUserDataAccessInterface {
+public class InMemoryUserDataAccessObject implements SendMessageUserDataAccessInterface, RecommendationUserDataAccessInterface {
     private final Map<String, User> users = new HashMap<>();
 
     /**
@@ -31,6 +32,9 @@ public class InMemoryUserDataAccessObject implements RecommendationUserDataAcces
     public User get(String username) {
         return users.get(username);
     }
+
+    @Override
+    public void save(User user) {}
 
     /**
      * @param username the user's username
