@@ -12,14 +12,12 @@ import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.reset_password.ResetPasswordViewModel;
 import interface_adapter.send_message.SendMessageControllerBuilder;
 
 import interface_adapter.recommendation.RecommendationControllerBuilder;
 import interface_adapter.signup.SignupViewModel;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,6 +39,7 @@ public class Main {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
+        ResetPasswordViewModel resetPasswordViewModel = new ResetPasswordViewModel();
 
         InMemoryConversationDataAccessObject conversationDataAccessObject = new InMemoryConversationDataAccessObject();
 //        InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
@@ -52,6 +51,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        ResetPasswordView resetPasswordView = ResetPasswordUseCaseFactory.create(viewManagerModel, resetPasswordViewModel, loginViewModel, userDataAccessObject);
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         LoggedInView loggedInView = new LoggedInView(
@@ -60,11 +60,15 @@ public class Main {
                 RecommendationControllerBuilder.createRecommendationController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject)
         );
 
+
+
         views.add(loginView, loginView.viewName);
         views.add(signupView, signupView.viewName);
+        views.add(resetPasswordView, resetPasswordView.viewName);
         views.add(loggedInView, loggedInView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        //TODO: Change back to signupView.viewName
+        viewManagerModel.setActiveView(resetPasswordView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

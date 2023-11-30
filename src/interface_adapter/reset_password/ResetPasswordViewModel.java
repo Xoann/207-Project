@@ -11,7 +11,7 @@ public class ResetPasswordViewModel extends ViewModel {
     public final String PASSWORD_LABEL = "Enter new password";
     public final String REPEAT_PASSWORD_LABEL = "Re-enter new password";
 
-    public static final String RESET_PASSWORD_BUTTON_LABEL = "Log in";
+    public static final String RESET_PASSWORD_BUTTON_LABEL = "Reset Password";
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
 
     private ResetPasswordState state = new ResetPasswordState();

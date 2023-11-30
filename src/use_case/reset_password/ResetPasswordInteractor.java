@@ -26,6 +26,7 @@ public class ResetPasswordInteractor implements ResetPasswordInputBoundary{
         else {
             User user = this.userDataAccessObject.get(username);
             user.setPassword(resetPasswordInputData.getNewPassword());
+            userDataAccessObject.save(user);
             ResetPasswordOutputData resetPasswordOutputData = new ResetPasswordOutputData(
                     user, false);
             userPresenter.prepareSuccessView(resetPasswordOutputData);
