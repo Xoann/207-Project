@@ -5,7 +5,7 @@ import use_case.reset_password.ResetPasswordInputData;
 
 public class ResetPasswordController {
     final ResetPasswordInputBoundary resetPasswordUseCaseInteractor;
-    ResetPasswordController(ResetPasswordInputBoundary resetPasswordUseCaseInteractor){
+    public ResetPasswordController(ResetPasswordInputBoundary resetPasswordUseCaseInteractor){
         this.resetPasswordUseCaseInteractor = resetPasswordUseCaseInteractor;
     }
 
