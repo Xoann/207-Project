@@ -11,14 +11,16 @@ import use_case.reset_password.ResetPasswordOutputData;
 
 public class ResetPasswordPresenter implements ResetPasswordOutputBoundary {
     private ViewManagerModel viewManagerModel;
+    //TODO: Change all LoginViewModel to Login
     private final LoginViewModel loginViewModel;
-    private final SignupViewModel signupViewModel;
+    //private final SignupViewModel signupViewModel;
+    private final ResetPasswordViewModel resetPasswordViewModel;
 
-    public ResetPasswordPresenter(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel){
+    public ResetPasswordPresenter(ViewManagerModel viewManagerModel, ResetPasswordViewModel resetPasswordViewModel, LoginViewModel loginViewModel){
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
-        this.signupViewModel = signupViewModel;
-
+        //this.signupViewModel = signupViewModel;
+        this.resetPasswordViewModel = resetPasswordViewModel;
     }
     @Override
     public void prepareSuccessView(ResetPasswordOutputData user) {
@@ -32,8 +34,15 @@ public class ResetPasswordPresenter implements ResetPasswordOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-        SignupState signupState = signupViewModel.getState();
+        /*SignupState signupState = signupViewModel.getState();
         signupState.setUsernameError(error);
-        signupViewModel.firePropertyChanged();
+        signupViewModel.firePropertyChanged();*/
+        ResetPasswordState resetPasswordState = resetPasswordViewModel.getState();
+        if(error.contains("username")){
+            resetPasswordState.setUsernameError(error);
+        } else {
+            resetPasswordState.setPasswordError(error);
+        }
+        resetPasswordViewModel.firePropertyChanged();
     }
 }
