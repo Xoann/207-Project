@@ -3,13 +3,14 @@ package data_access;
 import entity.User;
 import entity.UserFactory;
 import use_case.recommendation.RecommendationUserDataAccessInterface;
+import use_case.send_message.SendMessageUserDataAccessInterface;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileUserDataAccessObject implements RecommendationUserDataAccessInterface {
+public class FileUserDataAccessObject implements RecommendationUserDataAccessInterface, SendMessageUserDataAccessInterface {
 
     private final File csvFile;
 
