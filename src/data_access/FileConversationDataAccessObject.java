@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 public class FileConversationDataAccessObject implements SendMessageConversationDataAccessInterface, RecommendationConversationDataAccessInterface, LoginConversationDataAccessInterface {
 
     InMemoryUserDataAccessObject userDataAccessObject;
-    public FileConversationDataAccessObject(long id) {
+    public FileConversationDataAccessObject() {
         this.userDataAccessObject = new InMemoryUserDataAccessObject();
     }
 

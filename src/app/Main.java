@@ -32,7 +32,7 @@ public class Main {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
 
 //        InMemoryConversationDataAccessObject conversationDataAccessObject = new InMemoryConversationDataAccessObject();
-        FileConversationDataAccessObject conversationDataAccessObject = new FileConversationDataAccessObject(0);
+        FileConversationDataAccessObject conversationDataAccessObject = new FileConversationDataAccessObject();
 
         InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
 
