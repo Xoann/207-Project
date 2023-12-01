@@ -4,8 +4,8 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.switch_to_login.SwitchToLoginController;
 import use_case.recommendation.RecommendationUserDataAccessInterface;
-import use_case.signup.SignupUserDataAccessInterface;
 import entity.CommonUserFactory;
 import interface_adapter.*;
 import use_case.signup.SignupInputBoundary;
@@ -22,11 +22,11 @@ public class SignupUseCaseFactory {
     private SignupUseCaseFactory() {}
 
     public static SignupView create(
-            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, RecommendationUserDataAccessInterface userDataAccessObject) {
+            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, RecommendationUserDataAccessInterface userDataAccessObject, SwitchToLoginController switchToLoginController) {
 
         try {
             SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
-            return new SignupView(signupController, signupViewModel);
+            return new SignupView(signupController, signupViewModel, switchToLoginController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
             // Handle the exception or return an appropriate value, depending on your use case.

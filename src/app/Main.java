@@ -56,7 +56,8 @@ public class Main {
         ResetPasswordView resetPasswordView = ResetPasswordUseCaseFactory.create(viewManagerModel, resetPasswordViewModel,
                 loginViewModel, userDataAccessObject,
                 SwitchToLoginControllerBuilder.createSwitchToLoginController(viewManagerModel, loginViewModel));
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject,
+                SwitchToLoginControllerBuilder.createSwitchToLoginController(viewManagerModel, loginViewModel));
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject,
                 SwitchToResetPasswordControllerBuilder.createSwitchToResetPasswordController(viewManagerModel, resetPasswordViewModel));
         LoggedInView loggedInView = new LoggedInView(
@@ -72,8 +73,7 @@ public class Main {
         views.add(resetPasswordView, resetPasswordView.viewName);
         views.add(loggedInView, loggedInView.viewName);
 
-        //TODO: Change back to signupView.viewName
-        viewManagerModel.setActiveView(resetPasswordView.viewName);
+        viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
