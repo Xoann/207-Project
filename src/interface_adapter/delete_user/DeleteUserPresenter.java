@@ -1,15 +1,18 @@
 package interface_adapter.delete_user;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
+import use_case.delete_user.DeleteUserOutputBoundary;
+import use_case.delete_user.DeleteUserOutputData;
 
-public class DeleteUserPresenter implements DeleteUserOutputBoundary{
+public class DeleteUserPresenter implements DeleteUserOutputBoundary {
 
     private final DeleteUserViewModel DeleteUserViewModel;
 
     private final LoginViewModel loginViewModel;
 
-    private ViewManagerModel viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
 
     public DeleteUserPresenter(ViewManagerModel viewManagerModel,
                                DeleteUserViewModel DeleteUserViewModel,
