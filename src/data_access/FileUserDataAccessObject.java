@@ -72,6 +72,11 @@ public class FileUserDataAccessObject implements RecommendationUserDataAccessInt
         this.save();
     }
 
+    public void delete(User user) {
+        accounts.remove(user.getUsername(), user);
+        this.save();
+    }
+
     @Override
     public User get(String username) {
         return accounts.get(username);
