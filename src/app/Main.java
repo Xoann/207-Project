@@ -4,7 +4,7 @@ import data_access.FileUserDataAccessObject;
 import data_access.InMemoryConversationDataAccessObject;
 
 
-
+import interface_adapter.delete_user.DeleteUserViewModel;
 import interface_adapter.login.LoginViewModel;
 
 import data_access.InMemoryUserDataAccessObject;
@@ -16,10 +16,7 @@ import interface_adapter.send_message.SendMessageControllerBuilder;
 
 import interface_adapter.recommendation.RecommendationControllerBuilder;
 import interface_adapter.signup.SignupViewModel;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,6 +38,7 @@ public class Main {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
+        DeleteUserViewModel deleteUserViewModel = new DeleteUserViewModel();
 
         InMemoryConversationDataAccessObject conversationDataAccessObject = new InMemoryConversationDataAccessObject();
 //        InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
@@ -54,6 +52,7 @@ public class Main {
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
+        DeleteUserView deleteUserView = DeleteUserUseCaseFactory.create(viewManagerModel, deleteUserViewModel, loginViewModel, userDataAccessObject);
         LoggedInView loggedInView = new LoggedInView(
                 loggedInViewModel,
                 SendMessageControllerBuilder.createSendMessageController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject),
@@ -62,9 +61,11 @@ public class Main {
 
         views.add(loginView, loginView.viewName);
         views.add(signupView, signupView.viewName);
+        views.add(deleteUserView, deleteUserView.viewName);
         views.add(loggedInView, loggedInView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        //viewManagerModel.setActiveView(signupView.viewName);
+        viewManagerModel.setActiveView(deleteUserView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
