@@ -1,10 +1,11 @@
 package entity;
 
-import java.time.LocalDateTime;
-
 public class CommonUserFactory implements UserFactory {
+    /**
+     * Requires: password is valid.
+     */
     @Override
-    public User create(String name, String password, String apiKey) {
-        return new CommonUser(name, password, apiKey);
+    public User create(String name, String password, String key) {
+        return new CommonUser(name, password, key);
     }
 }
