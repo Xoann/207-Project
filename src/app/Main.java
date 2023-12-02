@@ -13,14 +13,14 @@ import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.reset_password.ResetPasswordViewModel;
 import interface_adapter.send_message.SendMessageControllerBuilder;
 
 import interface_adapter.recommendation.RecommendationControllerBuilder;
 import interface_adapter.signup.SignupViewModel;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import interface_adapter.switch_to_login.SwitchToLoginControllerBuilder;
+import interface_adapter.switch_to_reset_password.SwitchToResetPasswordControllerBuilder;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,6 +42,7 @@ public class Main {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
+        ResetPasswordViewModel resetPasswordViewModel = new ResetPasswordViewModel();
 
         FileConversationDataAccessObject conversationDataAccessObject = new FileConversationDataAccessObject(0);
         FileUserDataAccessObject userDataAccessObject;
@@ -51,16 +52,25 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject, conversationDataAccessObject);
+
+        ResetPasswordView resetPasswordView = ResetPasswordUseCaseFactory.create(viewManagerModel, resetPasswordViewModel,
+                loginViewModel, userDataAccessObject,
+                SwitchToLoginControllerBuilder.createSwitchToLoginController(viewManagerModel, loginViewModel));
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject,
+                SwitchToLoginControllerBuilder.createSwitchToLoginController(viewManagerModel, loginViewModel));
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject,
+                SwitchToResetPasswordControllerBuilder.createSwitchToResetPasswordController(viewManagerModel, resetPasswordViewModel), conversationDataAccessObject);
         LoggedInView loggedInView = new LoggedInView(
                 loggedInViewModel,
                 SendMessageControllerBuilder.createSendMessageController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject),
                 RecommendationControllerBuilder.createRecommendationController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject)
         );
 
+
+
         views.add(loginView, loginView.viewName);
         views.add(signupView, signupView.viewName);
+        views.add(resetPasswordView, resetPasswordView.viewName);
         views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
