@@ -126,6 +126,12 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         if (loggedInState.getRecommendationError() != null) {
             JOptionPane.showMessageDialog(this, loggedInState.getRecommendationError());
+            loggedInState.setRecommendationError(null);
+        }
+
+        if (loggedInState.getSendError() != null) {
+            JOptionPane.showMessageDialog(this, loggedInState.getSendError());
+            loggedInState.setSendError(null);
         }
 
         messageField.setText(loggedInState.getMessage());
