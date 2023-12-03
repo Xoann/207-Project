@@ -16,7 +16,7 @@ public class SendMessageControllerBuilder {
         MessageFactory messageFactory = new CommonMessageFactory();
         SendMessageInputBoundary sendMessageInputInteractor = new SendMessageInteractor(
                 sendMessageConversationDataAccessObject,
-                sendMessagePresenter,
+                sendMessageUserDataAccessObject, sendMessagePresenter,
                 messageFactory
         );
 
