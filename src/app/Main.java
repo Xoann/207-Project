@@ -1,5 +1,7 @@
 package app;
 
+
+import data_access.FileConversationDataAccessObject;
 import data_access.FileUserDataAccessObject;
 import data_access.InMemoryConversationDataAccessObject;
 
@@ -23,7 +25,11 @@ import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
+
+import java.time.LocalDateTime;
+
 import java.io.IOException;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -42,7 +48,13 @@ public class Main {
         SignupViewModel signupViewModel = new SignupViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
 
-        InMemoryConversationDataAccessObject conversationDataAccessObject = new InMemoryConversationDataAccessObject();
+
+//        InMemoryConversationDataAccessObject conversationDataAccessObject = new InMemoryConversationDataAccessObject();
+        FileConversationDataAccessObject conversationDataAccessObject = new FileConversationDataAccessObject();
+
+        //InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+
+ //       InMemoryConversationDataAccessObject conversationDataAccessObject = new InMemoryConversationDataAccessObject();
 //        InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
 
         FileUserDataAccessObject userDataAccessObject;
@@ -51,6 +63,7 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
