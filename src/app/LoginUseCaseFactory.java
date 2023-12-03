@@ -9,10 +9,10 @@ import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.switch_to_reset_password.SwitchToResetPasswordController;
+import interface_adapter.switch_to_signup.SwitchToSignupController;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
-import use_case.login.LoginUserDataAccessInterface;
 import view.LoginView;
 
 import javax.swing.*;
@@ -28,11 +28,11 @@ public class LoginUseCaseFactory {
             LoginViewModel loginViewModel,
             LoggedInViewModel loggedInViewModel,
             FileUserDataAccessObject userDataAccessObject,
-            SwitchToResetPasswordController switchToResetPasswordController) {
+            SwitchToResetPasswordController switchToResetPasswordController, SwitchToSignupController switchToSignupController) {
 
         try {
             LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
-            return new LoginView(loginViewModel, loginController, switchToResetPasswordController);
+            return new LoginView(loginViewModel, loginController, switchToResetPasswordController, switchToSignupController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
