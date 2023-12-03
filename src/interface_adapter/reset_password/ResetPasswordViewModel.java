@@ -1,26 +1,26 @@
-package interface_adapter.login;
+package interface_adapter.reset_password;
 
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class LoginViewModel extends ViewModel {
-
-    public final String TITLE_LABEL = "Log In View";
+public class ResetPasswordViewModel extends ViewModel {
+    public final String TITLE_LABEL = "Reset Password View";
     public final String USERNAME_LABEL = "Enter username";
-    public final String PASSWORD_LABEL = "Enter password";
+    public final String PASSWORD_LABEL = "Enter new password";
+    public final String REPEAT_PASSWORD_LABEL = "Re-enter new password";
 
-    public static final String LOGIN_BUTTON_LABEL = "Log in";
-    public static final String SIGN_UP_BUTTON_LABEL = "Sign Up";
+    public static final String RESET_PASSWORD_BUTTON_LABEL = "Reset Password";
+    public static final String CANCEL_BUTTON_LABEL = "Cancel";
 
-    private LoginState state = new LoginState();
+    private ResetPasswordState state = new ResetPasswordState();
 
-    public LoginViewModel() {
-        super("log in");
+    public ResetPasswordViewModel() {
+        super("reset password");
     }
 
-    public void setState(LoginState state) {
+    public void setState(ResetPasswordState state) {
         this.state = state;
     }
 
@@ -36,7 +36,7 @@ public class LoginViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
-    public LoginState getState() {
+    public ResetPasswordState getState() {
         return state;
     }
 }

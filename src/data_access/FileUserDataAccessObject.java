@@ -3,13 +3,15 @@ package data_access;
 import entity.User;
 import entity.UserFactory;
 import use_case.recommendation.RecommendationUserDataAccessInterface;
+import use_case.reset_password.ResetPasswordDataAccessInterface;
+import use_case.send_message.SendMessageUserDataAccessInterface;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileUserDataAccessObject implements RecommendationUserDataAccessInterface {
+public class FileUserDataAccessObject implements RecommendationUserDataAccessInterface, SendMessageUserDataAccessInterface, ResetPasswordDataAccessInterface {
 
     private final File csvFile;
 
@@ -106,5 +108,6 @@ public class FileUserDataAccessObject implements RecommendationUserDataAccessInt
             throw new RuntimeException(e);
         }
     }
+
 }
 
