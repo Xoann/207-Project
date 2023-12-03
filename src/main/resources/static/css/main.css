@@ -33,7 +33,6 @@ body:before {
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url('/static/images/maxresdefault.jpg');
     content: "";
     z-index: 0;
 }
@@ -236,6 +235,18 @@ button.accent {
     margin-left: 5px;
 }
 
+#generateResponseButton {
+    background-color: #ff9800; /* Different color for distinction */
+    color: #fff;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
+    margin-left: 5px; /* Spacing between buttons */
+}
+
+/* Adjust input width to accommodate the new button */
+#messageForm .input-group input {
+    width: calc(100% - 170px); /* Adjusted width */
+}
+
 .chat-header {
     text-align: center;
     padding: 15px;
@@ -283,11 +294,11 @@ button.accent {
     }
 
     #messageForm .input-group button {
-        width: 65px;
+        width: 60px;
     }
 
     #messageForm .input-group input {
-        width: calc(100% - 70px);
+        width: calc(100% - 155px);
     }
 
     .chat-header {
@@ -300,5 +311,9 @@ button.accent {
 
     .chat-header h2 {
         font-size: 1.1em;
+    }
+    #generateResponseButton {
+        padding: 0 5px; /* Reduce padding for smaller screens */
+        font-size: 0.8em; /* Smaller font size for the text */
     }
 }

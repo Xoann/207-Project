@@ -6,7 +6,15 @@
     <title>GPTChatHelper</title>
     <link rel="stylesheet" href="/css/main.css" />
 </head>
-<body>
+<body
+    style="
+        background-image: url('/images/background.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        "
+>
 <noscript>
     <h2>Oops! It seems like this browser doesn't support JavaScript</h2>
 </noscript>
@@ -41,6 +49,7 @@
                     <input type="text" id="message" placeholder="Type a message..."
                            autocomplete="off" class="form-control" />
                     <button type="submit" class="primary">Send</button>
+                    <button type="button" id="generateResponseButton" class="secondary">Help</button>
                 </div>
             </div>
         </form>

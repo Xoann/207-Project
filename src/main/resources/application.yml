@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/gptdb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  openai:
+    apikey: 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

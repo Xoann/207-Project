@@ -43,6 +43,8 @@ function onConnected() {
     )
 
     connectingElement.classList.add('hidden');
+
+    document.querySelector('#generateResponseButton').addEventListener('click', generateChatGPTResponse, true);
 }
 
 
@@ -51,11 +53,10 @@ function onError(error) {
     connectingElement.style.color = 'red';
 }
 
-
 function send(event) {
     var messageContent = messageInput.value.trim();
 
-    if(messageContent && stompClient) {
+    if (messageContent && stompClient) {
         var chatMessage = {
             sender: username,
             content: messageInput.value,
@@ -64,6 +65,19 @@ function send(event) {
 
         stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage));
         messageInput.value = '';
+    }
+    event.preventDefault();
+}
+
+function generateChatGPTResponse(event) {
+    if (stompClient) {
+        var chatMessage = {
+            sender: username,
+            type: 'GENERATE_RESPONSE'
+        };
+
+        // Send a message to the server to generate a response
+        stompClient.send("/app/chat.generateResponse", {}, JSON.stringify(chatMessage));
     }
     event.preventDefault();
 }
