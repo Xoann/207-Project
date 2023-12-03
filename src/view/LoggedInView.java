@@ -18,7 +18,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     public final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
     final JTextField messageField = new JTextField(100);
-    final JTextArea conversationArea = new JTextArea ("Conversation");
+    final JTextArea conversationArea = new JTextArea ();
 
     final JButton send;
     final JButton recommendation;
@@ -106,7 +106,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         conversationArea.setLineWrap(true);
         conversationArea.setPreferredSize(new Dimension(800, 400));
 
-
         JScrollPane conversation = new JScrollPane (conversationArea,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         conversation.setPreferredSize(new Dimension(200, 100));
@@ -126,6 +125,12 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         if (loggedInState.getRecommendationError() != null) {
             JOptionPane.showMessageDialog(this, loggedInState.getRecommendationError());
+            loggedInState.setRecommendationError(null);
+        }
+
+        if (loggedInState.getSendError() != null) {
+            JOptionPane.showMessageDialog(this, loggedInState.getSendError());
+            loggedInState.setSendError(null);
         }
 
         messageField.setText(loggedInState.getMessage());
