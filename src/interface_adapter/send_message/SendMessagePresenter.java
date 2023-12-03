@@ -20,11 +20,12 @@ public class SendMessagePresenter implements SendMessageOutputBoundary {
         String conversation = loggedInState.getConversation() + loggedInState.getUsername() + " : " + message.getMessage() + "\n";
         loggedInState.setConversation(conversation);
         loggedInViewModel.firePropertyChanged();
-
     }
 
     @Override
     public void prepareFailView(String error) {
-
+        LoggedInState loggedInState = loggedInViewModel.getState();
+        loggedInState.setSendError(error);
+        loggedInViewModel.firePropertyChanged();
     }
 }

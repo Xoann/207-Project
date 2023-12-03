@@ -50,4 +50,10 @@ public class InMemoryConversationDataAccessObject implements SendMessageConversa
     public boolean existsById(long id) {
         return conversations.containsKey(id);
     }
+
+    public void createConversation(long id) {
+        if (!existsById(id)) {
+            conversations.put(id, new Conversation(id));
+        }
+    }
 }

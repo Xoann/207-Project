@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 public class FileConversationDataAccessObject implements SendMessageConversationDataAccessInterface, RecommendationConversationDataAccessInterface, LoginConversationDataAccessInterface {
 
     InMemoryUserDataAccessObject userDataAccessObject;
-    public FileConversationDataAccessObject(long id) {
+    public FileConversationDataAccessObject() {
         this.userDataAccessObject = new InMemoryUserDataAccessObject();
     }
 
@@ -29,7 +29,7 @@ public class FileConversationDataAccessObject implements SendMessageConversation
             BufferedReader reader = new BufferedReader(fileReader);
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] content = line.split(",");
+                String[] content = line.split(",", 3);
                 String timeSent = content[0];
                 String username = content[1];
                 String messageText = content[2];

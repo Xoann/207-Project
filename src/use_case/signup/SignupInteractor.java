@@ -2,13 +2,14 @@ package use_case.signup;
 
 import entity.User;
 import entity.UserFactory;
+import use_case.recommendation.RecommendationUserDataAccessInterface;
 
 public class SignupInteractor implements SignupInputBoundary {
-    final SignupUserDataAccessInterface userDataAccessObject;
+    final RecommendationUserDataAccessInterface userDataAccessObject;
     final SignupOutputBoundary userPresenter;
     final UserFactory userFactory;
 
-    public SignupInteractor(SignupUserDataAccessInterface signupDataAccessInterface,
+    public SignupInteractor(RecommendationUserDataAccessInterface signupDataAccessInterface,
                             SignupOutputBoundary signupOutputBoundary,
                             UserFactory userFactory) {
         this.userDataAccessObject = signupDataAccessInterface;
@@ -18,7 +19,7 @@ public class SignupInteractor implements SignupInputBoundary {
 
     @Override
     public void execute(SignupInputData signupInputData) {
-        if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
+        if (userDataAccessObject.existsByUsername(signupInputData.getUsername())) {
             userPresenter.prepareFailView("Username already taken.");
         } else {
             User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getApiKey());
