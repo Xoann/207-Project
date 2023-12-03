@@ -9,9 +9,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
+import java.nio.file.Path;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,7 +23,9 @@ class FileConversationDataAccessObjectTest {
 
     FileConversationDataAccessObject conversationDataAccessObject = new FileConversationDataAccessObject();
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
+        new File("conversations").mkdir();
+        new File("conversations/100.txt").createNewFile();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("conversations/100.txt"))) {
             writer.write("2023-11-28 16:40,test,hi.\n");
             writer.write("2023-11-28 16:41,test2,hi there, who are you?\n");
