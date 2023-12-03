@@ -44,7 +44,7 @@ public class RecommendationTest {
 
         JPanel jp2 = (JPanel) jp.getComponent(0);
 
-        LoggedInView lv = (LoggedInView) jp2.getComponent(0);
+        LoggedInView lv = (LoggedInView) jp2.getComponent(3);
 
         JPanel messagePanel = (JPanel) lv.getComponent(2);
 
