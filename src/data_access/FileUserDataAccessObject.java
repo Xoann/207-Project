@@ -2,16 +2,17 @@ package data_access;
 
 import entity.User;
 import entity.UserFactory;
+import use_case.login.LoginUserDataAccessInterface;
 import use_case.recommendation.RecommendationUserDataAccessInterface;
-import use_case.reset_password.ResetPasswordDataAccessInterface;
 import use_case.send_message.SendMessageUserDataAccessInterface;
-
+import use_case.signup.SignupUserDataAccessInterface;
+import use_case.reset_password.ResetPasswordDataAccessInterface;
 import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileUserDataAccessObject implements RecommendationUserDataAccessInterface, SendMessageUserDataAccessInterface, ResetPasswordDataAccessInterface {
+public class FileUserDataAccessObject implements SendMessageUserDataAccessInterface, RecommendationUserDataAccessInterface, LoginUserDataAccessInterface, SignupUserDataAccessInterface, ResetPasswordDataAccessInterface {
 
     private final File csvFile;
 

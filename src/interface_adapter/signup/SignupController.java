@@ -13,7 +13,6 @@ public class SignupController {
     public void execute(String username, String password, String key) {
         SignupInputData signupInputData = new SignupInputData(
                 username, password, key);
-
         userSignupUseCaseInteractor.execute(signupInputData);
     }
 }

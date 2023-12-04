@@ -1,17 +1,13 @@
 package app;
 
-
-import data_access.FileConversationDataAccessObject;
 import data_access.FileUserDataAccessObject;
-import data_access.InMemoryConversationDataAccessObject;
+import data_access.FileConversationDataAccessObject;
 
 
 
 import interface_adapter.login.LoginViewModel;
 
-import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
-import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.reset_password.ResetPasswordViewModel;
@@ -26,11 +22,7 @@ import view.*;
 
 import javax.swing.*;
 import java.awt.*;
-
-import java.time.LocalDateTime;
-
 import java.io.IOException;
-
 
 public class Main {
     public static void main(String[] args) {
@@ -50,22 +42,13 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         ResetPasswordViewModel resetPasswordViewModel = new ResetPasswordViewModel();
 
-
-//        InMemoryConversationDataAccessObject conversationDataAccessObject = new InMemoryConversationDataAccessObject();
-        FileConversationDataAccessObject conversationDataAccessObject = new FileConversationDataAccessObject();
-
-        //InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
-
- //       InMemoryConversationDataAccessObject conversationDataAccessObject = new InMemoryConversationDataAccessObject();
-//        InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
-
+        FileConversationDataAccessObject conversationDataAccessObject = new FileConversationDataAccessObject(0);
         FileUserDataAccessObject userDataAccessObject;
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
 
         ResetPasswordView resetPasswordView = ResetPasswordUseCaseFactory.create(viewManagerModel, resetPasswordViewModel,
                 loginViewModel, userDataAccessObject,
@@ -74,8 +57,7 @@ public class Main {
                 SwitchToLoginControllerBuilder.createSwitchToLoginController(viewManagerModel, loginViewModel));
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject,
                 SwitchToResetPasswordControllerBuilder.createSwitchToResetPasswordController(viewManagerModel, resetPasswordViewModel),
-                SwitchToSignupControllerBuilder.createSwitchToSignupController(viewManagerModel, signupViewModel));
-
+                conversationDataAccessObject, SwitchToSignupControllerBuilder.createSwitchToSignupController(viewManagerModel, signupViewModel));
         LoggedInView loggedInView = new LoggedInView(
                 loggedInViewModel,
                 SendMessageControllerBuilder.createSendMessageController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject),

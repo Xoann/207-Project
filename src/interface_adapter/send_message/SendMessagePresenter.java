@@ -1,6 +1,5 @@
 package interface_adapter.send_message;
 
-import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.send_message.SendMessageOutputBoundary;
@@ -17,7 +16,7 @@ public class SendMessagePresenter implements SendMessageOutputBoundary {
     @Override
     public void prepareSuccessView(SendMessageOutputData message) {
         LoggedInState loggedInState = loggedInViewModel.getState();
-        String conversation = loggedInState.getConversation() + loggedInState.getUsername() + " : " + message.getMessage() + "\n";
+        String conversation = loggedInState.getConversation() + loggedInState.getUsername() + " : " + message.getMessage().getMessage() + "\n";
         loggedInState.setConversation(conversation);
         loggedInViewModel.firePropertyChanged();
     }

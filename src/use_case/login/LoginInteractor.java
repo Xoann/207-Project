@@ -2,8 +2,6 @@ package use_case.login;
 
 import entity.Conversation;
 import entity.User;
-import data_access.FileUserDataAccessObject;
-import entity.User;
 
 public class LoginInteractor implements LoginInputBoundary {
     final LoginUserDataAccessInterface userDataAccessObject;

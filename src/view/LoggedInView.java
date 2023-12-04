@@ -96,7 +96,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         JPanel messagePanel = new JPanel();
         messagePanel.setLayout(new FlowLayout());
-        messagePanel.setPreferredSize(new Dimension(1200, 50));
+        messagePanel.setPreferredSize(new Dimension(1300, 50));
         messageField.setPreferredSize(new Dimension(150,20));
 
         messagePanel.add(messageField);

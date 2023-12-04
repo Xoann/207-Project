@@ -21,13 +21,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FileConversationDataAccessObjectTest {
 
-    FileConversationDataAccessObject conversationDataAccessObject = new FileConversationDataAccessObject();
+    FileConversationDataAccessObject conversationDataAccessObject = new FileConversationDataAccessObject(0);
     @BeforeEach
     void setUp() throws IOException {
         new File("conversations").mkdir();
         new File("conversations/100.txt").createNewFile();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("conversations/100.txt"))) {
-            writer.write("2023-11-28 16:40,test,hi.\n");
+            writer.write("2023-11-28 16:40,test1,hi.\n");
             writer.write("2023-11-28 16:41,test2,hi there, who are you?\n");
             writer.write("2023-11-28 16:42,test3,hey, that's test!\n");
 
@@ -62,7 +62,7 @@ class FileConversationDataAccessObjectTest {
     void getCorrectUsers() {
         Conversation conversation = conversationDataAccessObject.get(100);
         ArrayList<Message> messages = conversation.getMessages();
-        assertEquals("test", messages.get(0).getSender().getUsername());
+        assertEquals("test1", messages.get(0).getSender().getUsername());
         assertEquals("test2", messages.get(1).getSender().getUsername());
         assertEquals("test3", messages.get(2).getSender().getUsername());
     }
@@ -84,14 +84,14 @@ class FileConversationDataAccessObjectTest {
 
     @Test
     void save() {
-        User sender = new CommonUserFactory().create("test", "password", "apikey");
+        User sender = new CommonUserFactory().create("test1", "password", "apikey");
         Message message = new CommonMessageFactory().create("This is a test", sender);
         conversationDataAccessObject.save(100, message);
         Conversation conversation = conversationDataAccessObject.get(100);
         try {
             Message fourthMessage = conversation.getMessages().get(3);
             assertEquals("This is a test", fourthMessage.getMessage());
-            assertEquals("test", fourthMessage.getSender().getUsername());
+            assertEquals("test1", fourthMessage.getSender().getUsername());
         } catch (IndexOutOfBoundsException e) {
             fail("Message did not save");
         }

@@ -2,14 +2,13 @@ package use_case.signup;
 
 import entity.User;
 import entity.UserFactory;
-import use_case.recommendation.RecommendationUserDataAccessInterface;
 
 public class SignupInteractor implements SignupInputBoundary {
-    final RecommendationUserDataAccessInterface userDataAccessObject;
+    final SignupUserDataAccessInterface userDataAccessObject;
     final SignupOutputBoundary userPresenter;
     final UserFactory userFactory;
 
-    public SignupInteractor(RecommendationUserDataAccessInterface signupDataAccessInterface,
+    public SignupInteractor(SignupUserDataAccessInterface signupDataAccessInterface,
                             SignupOutputBoundary signupOutputBoundary,
                             UserFactory userFactory) {
         this.userDataAccessObject = signupDataAccessInterface;
