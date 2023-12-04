@@ -2,15 +2,12 @@ package app;
 
 import data_access.FileUserDataAccessObject;
 import data_access.FileConversationDataAccessObject;
-import data_access.InMemoryConversationDataAccessObject;
 
 
 
 import interface_adapter.login.LoginViewModel;
 
-import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
-import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.reset_password.ResetPasswordViewModel;
@@ -20,6 +17,7 @@ import interface_adapter.recommendation.RecommendationControllerBuilder;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.switch_to_login.SwitchToLoginControllerBuilder;
 import interface_adapter.switch_to_reset_password.SwitchToResetPasswordControllerBuilder;
+import interface_adapter.switch_to_signup.SwitchToSignupControllerBuilder;
 import view.*;
 
 import javax.swing.*;
@@ -52,14 +50,14 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-
         ResetPasswordView resetPasswordView = ResetPasswordUseCaseFactory.create(viewManagerModel, resetPasswordViewModel,
                 loginViewModel, userDataAccessObject,
                 SwitchToLoginControllerBuilder.createSwitchToLoginController(viewManagerModel, loginViewModel));
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject,
                 SwitchToLoginControllerBuilder.createSwitchToLoginController(viewManagerModel, loginViewModel));
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject,
-                SwitchToResetPasswordControllerBuilder.createSwitchToResetPasswordController(viewManagerModel, resetPasswordViewModel), conversationDataAccessObject);
+                SwitchToResetPasswordControllerBuilder.createSwitchToResetPasswordController(viewManagerModel, resetPasswordViewModel),
+                conversationDataAccessObject, SwitchToSignupControllerBuilder.createSwitchToSignupController(viewManagerModel, signupViewModel));
         LoggedInView loggedInView = new LoggedInView(
                 loggedInViewModel,
                 SendMessageControllerBuilder.createSendMessageController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject),

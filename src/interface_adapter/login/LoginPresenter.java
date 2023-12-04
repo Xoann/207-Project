@@ -1,6 +1,5 @@
 package interface_adapter.login;
 
-import com.sun.tools.jconsole.JConsoleContext;
 import entity.Message;
 import entity.User;
 import interface_adapter.ViewManagerModel;
