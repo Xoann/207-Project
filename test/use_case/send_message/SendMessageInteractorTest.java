@@ -2,11 +2,15 @@ package use_case.send_message;
 
 import data_access.InMemoryConversationDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
-import entity.*;
+import entity.CommonMessageFactory;
+import entity.CommonUserFactory;
+import entity.MessageFactory;
+import entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class SendMessageInteractorTest {
     InMemoryUserDataAccessObject userDataAccessObject;
@@ -83,6 +87,28 @@ class SendMessageInteractorTest {
 
         User sender = new CommonUserFactory().create("John", "password", "apikey");
         SendMessageInputData inputData = new SendMessageInputData("hi", sender, 999);
+        SendMessageInputBoundary interactor = new SendMessageInteractor(
+                conversationDataAccessObject, userDataAccessObject, failPresenter, messageFactory
+        );
+        interactor.execute(inputData);
+    }
+
+    @Test
+    void FailTestBadAPIKey() {
+        SendMessageOutputBoundary failPresenter = new SendMessageOutputBoundary() {
+            @Override
+            public void prepareSuccessView(SendMessageOutputData message) {
+                fail("Unexpected use case success");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals(error, "Moderation API failed. Check API key or try again later.");
+            }
+        };
+
+        User sender = new CommonUserFactory().create("John", "password", "apikey");
+        SendMessageInputData inputData = new SendMessageInputData("hi", sender, 0);
         SendMessageInputBoundary interactor = new SendMessageInteractor(
                 conversationDataAccessObject, userDataAccessObject, failPresenter, messageFactory
         );
