@@ -44,6 +44,10 @@ public class InMemoryUserDataAccessObject implements SendMessageUserDataAccessIn
         return users.containsKey(username);
     }
 
+    /**
+     * Saves the user to the users ArrayList
+     * @param user the user to save
+     */
     @Override
     public void save(User user) {
         users.put(user.getUsername(), user);

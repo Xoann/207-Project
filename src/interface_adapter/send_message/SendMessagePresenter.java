@@ -1,6 +1,5 @@
 package interface_adapter.send_message;
 
-import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.send_message.SendMessageOutputBoundary;

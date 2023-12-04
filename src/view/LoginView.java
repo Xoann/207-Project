@@ -4,6 +4,7 @@ import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.switch_to_reset_password.SwitchToResetPasswordController;
+import interface_adapter.switch_to_signup.SwitchToSignupController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,11 +27,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JLabel passwordErrorField = new JLabel();
 
     final JButton logIn;
-    final JButton cancel;
+    final JButton signup;
     final JButton resetPassword;
     private final LoginController loginController;
 
-    public LoginView(LoginViewModel loginViewModel, LoginController controller, SwitchToResetPasswordController switchToResetPasswordController) {
+    public LoginView(LoginViewModel loginViewModel, LoginController controller, SwitchToResetPasswordController switchToResetPasswordController, SwitchToSignupController switchToSignupController) {
 
         this.loginController = controller;
         this.loginViewModel = loginViewModel;
@@ -47,8 +48,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         JPanel buttons = new JPanel();
         logIn = new JButton(loginViewModel.LOGIN_BUTTON_LABEL);
         buttons.add(logIn);
-        cancel = new JButton(loginViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(cancel);
+        signup = new JButton(loginViewModel.SIGN_UP_BUTTON_LABEL);
+        buttons.add(signup);
         resetPassword = new JButton("Reset Password");
         buttons.add(resetPassword);
 
@@ -67,9 +68,18 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 }
         );
 
-        cancel.addActionListener(this);
+        signup.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(e.getSource().equals(signup)){
+                            switchToSignupController.execute();
+                        }
+                    }
+                }
+        );
 
-        //TODO: Find out how to change the view model to SignUp view
+
         resetPassword.addActionListener(
                 new ActionListener() {
                     @Override
