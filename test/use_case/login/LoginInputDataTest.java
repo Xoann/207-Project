@@ -1,4 +1,4 @@
-package use_case;
+package use_case.login;
 
 import org.junit.jupiter.api.Test;
 import use_case.login.LoginInputData;
