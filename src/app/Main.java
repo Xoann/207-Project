@@ -4,7 +4,7 @@ import data_access.FileUserDataAccessObject;
 import data_access.FileConversationDataAccessObject;
 
 
-
+import interface_adapter.delete_user.DeleteUserViewModel;
 import interface_adapter.login.LoginViewModel;
 
 import entity.CommonUserFactory;
@@ -40,6 +40,7 @@ public class Main {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
+        DeleteUserViewModel deleteUserViewModel = new DeleteUserViewModel();
         ResetPasswordViewModel resetPasswordViewModel = new ResetPasswordViewModel();
 
         FileConversationDataAccessObject conversationDataAccessObject = new FileConversationDataAccessObject(0);
@@ -50,6 +51,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        DeleteUserView deleteUserView = DeleteUserUseCaseFactory.create(viewManagerModel, deleteUserViewModel, loginViewModel, userDataAccessObject);
         ResetPasswordView resetPasswordView = ResetPasswordUseCaseFactory.create(viewManagerModel, resetPasswordViewModel,
                 loginViewModel, userDataAccessObject,
                 SwitchToLoginControllerBuilder.createSwitchToLoginController(viewManagerModel, loginViewModel));
@@ -68,6 +70,7 @@ public class Main {
 
         views.add(loginView, loginView.viewName);
         views.add(signupView, signupView.viewName);
+        views.add(deleteUserView, deleteUserView.viewName);
         views.add(resetPasswordView, resetPasswordView.viewName);
         views.add(loggedInView, loggedInView.viewName);
 
