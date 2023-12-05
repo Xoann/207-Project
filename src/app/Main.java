@@ -1,21 +1,23 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
-import data_access.InMemoryConversationDataAccessObject;
+import data_access.FileConversationDataAccessObject;
 
 
 import interface_adapter.delete_user.DeleteUserViewModel;
 import interface_adapter.login.LoginViewModel;
 
-import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
-import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.reset_password.ResetPasswordViewModel;
 import interface_adapter.send_message.SendMessageControllerBuilder;
 
 import interface_adapter.recommendation.RecommendationControllerBuilder;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.switch_to_login.SwitchToLoginControllerBuilder;
+import interface_adapter.switch_to_reset_password.SwitchToResetPasswordControllerBuilder;
+import interface_adapter.switch_to_signup.SwitchToSignupControllerBuilder;
 import view.*;
 
 import javax.swing.*;
@@ -39,10 +41,9 @@ public class Main {
         SignupViewModel signupViewModel = new SignupViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
         DeleteUserViewModel deleteUserViewModel = new DeleteUserViewModel();
+        ResetPasswordViewModel resetPasswordViewModel = new ResetPasswordViewModel();
 
-        InMemoryConversationDataAccessObject conversationDataAccessObject = new InMemoryConversationDataAccessObject();
-//        InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
-
+        FileConversationDataAccessObject conversationDataAccessObject = new FileConversationDataAccessObject(0);
         FileUserDataAccessObject userDataAccessObject;
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
@@ -50,22 +51,30 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         DeleteUserView deleteUserView = DeleteUserUseCaseFactory.create(viewManagerModel, deleteUserViewModel, loginViewModel, userDataAccessObject);
+        ResetPasswordView resetPasswordView = ResetPasswordUseCaseFactory.create(viewManagerModel, resetPasswordViewModel,
+                loginViewModel, userDataAccessObject,
+                SwitchToLoginControllerBuilder.createSwitchToLoginController(viewManagerModel, loginViewModel));
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject,
+                SwitchToLoginControllerBuilder.createSwitchToLoginController(viewManagerModel, loginViewModel));
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject,
+                SwitchToResetPasswordControllerBuilder.createSwitchToResetPasswordController(viewManagerModel, resetPasswordViewModel),
+                conversationDataAccessObject, SwitchToSignupControllerBuilder.createSwitchToSignupController(viewManagerModel, signupViewModel));
         LoggedInView loggedInView = new LoggedInView(
                 loggedInViewModel,
                 SendMessageControllerBuilder.createSendMessageController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject),
                 RecommendationControllerBuilder.createRecommendationController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject)
         );
 
+
+
         views.add(loginView, loginView.viewName);
         views.add(signupView, signupView.viewName);
         views.add(deleteUserView, deleteUserView.viewName);
+        views.add(resetPasswordView, resetPasswordView.viewName);
         views.add(loggedInView, loggedInView.viewName);
 
-        //viewManagerModel.setActiveView(signupView.viewName);
-        viewManagerModel.setActiveView(deleteUserView.viewName);
+        viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

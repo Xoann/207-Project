@@ -1,16 +1,19 @@
 package use_case.login;
 
-import data_access.FileUserDataAccessObject;
+import entity.Conversation;
 import entity.User;
 
 public class LoginInteractor implements LoginInputBoundary {
-    final FileUserDataAccessObject userDataAccessObject;
+    final LoginUserDataAccessInterface userDataAccessObject;
+    final LoginConversationDataAccessInterface conversationDataAccessObject;
     final LoginOutputBoundary loginPresenter;
 
-    public LoginInteractor(FileUserDataAccessObject userDataAccessInterface,
-                           LoginOutputBoundary loginOutputBoundary) {
+    public LoginInteractor(LoginUserDataAccessInterface userDataAccessInterface,
+                           LoginOutputBoundary loginOutputBoundary,
+                           LoginConversationDataAccessInterface conversationDataAccessObject) {
         this.userDataAccessObject = userDataAccessInterface;
         this.loginPresenter = loginOutputBoundary;
+        this.conversationDataAccessObject = conversationDataAccessObject;
     }
 
     @Override
@@ -26,8 +29,15 @@ public class LoginInteractor implements LoginInputBoundary {
             } else {
 
                 User user = userDataAccessObject.get(loginInputData.getUsername());
+//                TODO change convo id
+                Conversation conversation;
+                if (conversationDataAccessObject.existsById(0)) {
+                    conversation = conversationDataAccessObject.get(0);
+                } else {
+                    conversation = new Conversation(0);
+                }
 
-                LoginOutputData loginOutputData = new LoginOutputData(user.getUsername(), false);
+                LoginOutputData loginOutputData = new LoginOutputData(user.getUsername(), conversation, false);
                 loginPresenter.prepareSuccessView(loginOutputData);
             }
         }

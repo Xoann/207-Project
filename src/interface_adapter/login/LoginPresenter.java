@@ -1,5 +1,7 @@
 package interface_adapter.login;
 
+import entity.Message;
+import entity.User;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -26,6 +28,12 @@ public class LoginPresenter implements LoginOutputBoundary {
 
         LoggedInState loggedInState = loggedInViewModel.getState();
         loggedInState.setUsername(response.getUsername());
+        StringBuilder conversation = new StringBuilder();
+        for (Message message : response.getConversation().getMessages()) {
+            User sender = message.getSender();
+            conversation.append(sender.getUsername()).append(": ").append(message.getMessage()).append("\n");
+        }
+        loggedInState.setConversation(String.valueOf(conversation));
         this.loggedInViewModel.setState(loggedInState);
         this.loggedInViewModel.firePropertyChanged();
 

@@ -3,6 +3,8 @@ package view;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.switch_to_reset_password.SwitchToResetPasswordController;
+import interface_adapter.switch_to_signup.SwitchToSignupController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,10 +27,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JLabel passwordErrorField = new JLabel();
 
     final JButton logIn;
-    final JButton cancel;
+    final JButton signup;
+    final JButton resetPassword;
     private final LoginController loginController;
 
-    public LoginView(LoginViewModel loginViewModel, LoginController controller) {
+    public LoginView(LoginViewModel loginViewModel, LoginController controller, SwitchToResetPasswordController switchToResetPasswordController, SwitchToSignupController switchToSignupController) {
 
         this.loginController = controller;
         this.loginViewModel = loginViewModel;
@@ -45,8 +48,10 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         JPanel buttons = new JPanel();
         logIn = new JButton(loginViewModel.LOGIN_BUTTON_LABEL);
         buttons.add(logIn);
-        cancel = new JButton(loginViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(cancel);
+        signup = new JButton(loginViewModel.SIGN_UP_BUTTON_LABEL);
+        buttons.add(signup);
+        resetPassword = new JButton("Reset Password");
+        buttons.add(resetPassword);
 
         logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -63,7 +68,28 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 }
         );
 
-        cancel.addActionListener(this);
+        signup.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(e.getSource().equals(signup)){
+                            switchToSignupController.execute();
+                        }
+                    }
+                }
+        );
+
+
+        resetPassword.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(resetPassword)) {
+                            switchToResetPasswordController.execute();
+                        }
+                    }
+                }
+        );
 
         usernameInputField.addKeyListener(new KeyListener() {
             @Override
