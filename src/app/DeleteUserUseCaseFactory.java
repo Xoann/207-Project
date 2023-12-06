@@ -6,6 +6,7 @@ import interface_adapter.delete_user.DeleteUserController;
 import interface_adapter.delete_user.DeleteUserPresenter;
 import interface_adapter.delete_user.DeleteUserViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.switch_to_login.SwitchToLoginController;
 import use_case.delete_user.DeleteUserInputBoundary;
 import use_case.delete_user.DeleteUserInteractor;
 import use_case.delete_user.DeleteUserOutputBoundary;
@@ -23,11 +24,12 @@ public class DeleteUserUseCaseFactory {
             ViewManagerModel viewManagerModel,
             DeleteUserViewModel deleteUserViewModel,
             LoginViewModel loginViewModel,
-            FileUserDataAccessObject userDataAccessObject) {
+            FileUserDataAccessObject userDataAccessObject,
+            SwitchToLoginController switchToLoginController) {
 
      try {
          DeleteUserController deleteUserController = createDeleteUserUseCase(viewManagerModel, deleteUserViewModel, loginViewModel, userDataAccessObject);
-         return new DeleteUserView(deleteUserViewModel, deleteUserController);
+         return new DeleteUserView(deleteUserViewModel, deleteUserController, switchToLoginController);
     } catch (IOException e) {
         JOptionPane.showMessageDialog(null, "Could not open user data file.");
     }

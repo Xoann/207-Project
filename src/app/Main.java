@@ -15,6 +15,7 @@ import interface_adapter.send_message.SendMessageControllerBuilder;
 
 import interface_adapter.recommendation.RecommendationControllerBuilder;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.switch_to_delete_user.SwitchToDeleteUserControllerBuilder;
 import interface_adapter.switch_to_login.SwitchToLoginControllerBuilder;
 import interface_adapter.switch_to_reset_password.SwitchToResetPasswordControllerBuilder;
 import interface_adapter.switch_to_signup.SwitchToSignupControllerBuilder;
@@ -51,7 +52,8 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        DeleteUserView deleteUserView = DeleteUserUseCaseFactory.create(viewManagerModel, deleteUserViewModel, loginViewModel, userDataAccessObject);
+        DeleteUserView deleteUserView = DeleteUserUseCaseFactory.create(viewManagerModel, deleteUserViewModel, loginViewModel, userDataAccessObject,
+                SwitchToLoginControllerBuilder.createSwitchToLoginController(viewManagerModel, loginViewModel));
         ResetPasswordView resetPasswordView = ResetPasswordUseCaseFactory.create(viewManagerModel, resetPasswordViewModel,
                 loginViewModel, userDataAccessObject,
                 SwitchToLoginControllerBuilder.createSwitchToLoginController(viewManagerModel, loginViewModel));
@@ -59,7 +61,8 @@ public class Main {
                 SwitchToLoginControllerBuilder.createSwitchToLoginController(viewManagerModel, loginViewModel));
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject,
                 SwitchToResetPasswordControllerBuilder.createSwitchToResetPasswordController(viewManagerModel, resetPasswordViewModel),
-                conversationDataAccessObject, SwitchToSignupControllerBuilder.createSwitchToSignupController(viewManagerModel, signupViewModel));
+                conversationDataAccessObject, SwitchToSignupControllerBuilder.createSwitchToSignupController(viewManagerModel, signupViewModel),
+                SwitchToDeleteUserControllerBuilder.createSwitchToDeleteUserController(viewManagerModel, deleteUserViewModel));
         LoggedInView loggedInView = new LoggedInView(
                 loggedInViewModel,
                 SendMessageControllerBuilder.createSendMessageController(loggedInViewModel, userDataAccessObject, conversationDataAccessObject),
