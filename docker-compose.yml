@@ -17,5 +17,21 @@ services:
     ports:
       - "8081:8080"
 
+  springboot-app:
+    build: .
+    # Or use 'image' if you have a pre-built image
+    # image: my-springboot-app:latest
+    container_name: springboot-GPTChatHelper
+    restart: unless-stopped
+    depends_on:
+      - mysql-GPTChatHelperDB
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-GPTChatHelperDB:3306/gptdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+      OPENAI_API_KEY: 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
+    ports:
+      - "80:8080"
+
 volumes:
   mysql-data:

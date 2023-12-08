@@ -68,6 +68,8 @@ public class ChatController {
             chatMessage.setType(CHAT);
         }
 
+        chathistoryService.insertChathistory(chatMessage.generateId(), chatMessage.getCurrentTime()
+                , chatMessage.getSender(), chatMessage.getContent());
         return chatMessage;
     }
 
