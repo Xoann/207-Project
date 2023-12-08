@@ -3,6 +3,7 @@ package view;
 import interface_adapter.delete_user.DeleteUserController;
 import interface_adapter.delete_user.DeleteUserState;
 import interface_adapter.delete_user.DeleteUserViewModel;
+import interface_adapter.switch_to_login.SwitchToLoginController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +29,7 @@ public class DeleteUserView extends JPanel implements ActionListener, PropertyCh
     private final JButton deleteUser;
     private final JButton cancel;
 
-    public DeleteUserView(DeleteUserViewModel deleteUserViewModel, DeleteUserController deleteUserController) {
+    public DeleteUserView(DeleteUserViewModel deleteUserViewModel, DeleteUserController deleteUserController, SwitchToLoginController switchToLoginController) {
 
         this.deleteUserController = deleteUserController;
         this.deleteUserViewModel = deleteUserViewModel;
@@ -64,7 +65,16 @@ public class DeleteUserView extends JPanel implements ActionListener, PropertyCh
                 }
         );
 
-        cancel.addActionListener(this);
+        cancel.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(e.getSource().equals(cancel)) {
+                            switchToLoginController.execute();
+                        }
+                    }
+                }
+        );
 
         usernameInputField.addKeyListener(new KeyListener() {
             @Override

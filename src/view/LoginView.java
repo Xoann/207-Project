@@ -3,6 +3,7 @@ package view;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.switch_to_delete_user.SwitchToDeleteUserController;
 import interface_adapter.switch_to_reset_password.SwitchToResetPasswordController;
 import interface_adapter.switch_to_signup.SwitchToSignupController;
 
@@ -29,9 +30,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     final JButton logIn;
     final JButton signup;
     final JButton resetPassword;
+
+    final JButton deleteUser;
     private final LoginController loginController;
 
-    public LoginView(LoginViewModel loginViewModel, LoginController controller, SwitchToResetPasswordController switchToResetPasswordController, SwitchToSignupController switchToSignupController) {
+    public LoginView(LoginViewModel loginViewModel, LoginController controller, SwitchToResetPasswordController switchToResetPasswordController, SwitchToSignupController switchToSignupController, SwitchToDeleteUserController switchToDeleteUserController) {
 
         this.loginController = controller;
         this.loginViewModel = loginViewModel;
@@ -52,6 +55,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         buttons.add(signup);
         resetPassword = new JButton("Reset Password");
         buttons.add(resetPassword);
+        deleteUser = new JButton("Delete User");
+        buttons.add(deleteUser);
 
         logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -86,6 +91,17 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(resetPassword)) {
                             switchToResetPasswordController.execute();
+                        }
+                    }
+                }
+        );
+
+        deleteUser.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(deleteUser)) {
+                            switchToDeleteUserController.execute();
                         }
                     }
                 }

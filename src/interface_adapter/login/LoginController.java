@@ -3,7 +3,7 @@ package interface_adapter.login;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInputData;
 
-public class LoginController {
+public class                                                                                                                                                                                            LoginController {
 
     final LoginInputBoundary loginUseCaseInteractor;
     public LoginController(LoginInputBoundary loginUseCaseInteractor) {
